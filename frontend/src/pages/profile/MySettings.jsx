@@ -13,11 +13,11 @@ import {
   FaDownload,
   FaExclamationTriangle,
 } from 'react-icons/fa';
-import { useLogout } from '../../store/useAuth';
-
+import { useAuth } from '../../store/useAuth';
+import ButtonLoader from '../../components/loaders/ButtonLoader';
 
 const MySettings = () => {
-  const {handleLogout} = useLogout();
+  const {handleLogout, logoutLoading} = useAuth();
   // State for social media links
   const [socialLinks, setSocialLinks] = useState({
     twitter: 'https://twitter.com/username',
@@ -190,7 +190,7 @@ const MySettings = () => {
                       className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
                     >
                       <FaSignOutAlt className="w-4 h-4" />
-                      Logout
+                      {logoutLoading ? <ButtonLoader /> : 'Logout'}
                     </button>
                   </div>
                 </div>

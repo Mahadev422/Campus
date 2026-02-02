@@ -3,7 +3,6 @@ import { create } from "zustand";
 const url = import.meta.env.VITE_BACKEND;
 
 export const useUser = create((set, get) => ({
-  user: {},
   loading: false,
   userData: {},
 
@@ -16,9 +15,8 @@ export const useUser = create((set, get) => ({
       const resData = await res.json();
       if (!resData.ok) {
         set({ error: resData.msg });
-        window.location.href = '/login';
-      }
-      else set({ user: { ...resData.msg }, userData: { ...resData.msg } });
+        window.location.href = "/login";
+      } else set({ userData: { ...resData.msg } });
     } catch (err) {
     } finally {
       set({ loading: false });

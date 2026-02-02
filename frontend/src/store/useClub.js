@@ -3,22 +3,23 @@ import { create } from "zustand";
 const url = import.meta.env.VITE_BACKEND;
 
 export const useClub = create((set, get) => ({
-  clubData: {},
   loading: false,
   error: null,
   clubs: [],
 
   getAllClubs: async () => {
-    set({loading: true});
+    set({ loading: true });
     try {
-      const res = await fetch(`${url}/club/get-all`,{credentials: "include"});
+      const res = await fetch(`${url}/club/get-all`, {
+        credentials: "include",
+      });
       const resData = await res.json();
       if (!resData.ok) set({ error: resData.msg });
       else set({ clubs: [...resData.msg], error: null });
     } catch (err) {
-      set({error: err.message});
+      set({ error: err.message });
     } finally {
-      set({loading: false});
+      set({ loading: false });
     }
   },
 }));
@@ -27,21 +28,19 @@ export const useClubById = create((set, get) => ({
   loading: false,
   error: null,
   clubData: {},
-  members: [],
-  coordinator: [],
 
   getClubById: async (clubId) => {
     set({ loading: true });
     try {
-      const res = await fetch(`${url}/club/${clubId}`, {credentials: "include"});
+      const res = await fetch(`${url}/club/${clubId}`, {
+        credentials: "include",
+      });
       const resData = await res.json();
       if (!resData.ok) set({ error: resData.msg, loading: false });
       else {
         const data = resData.msg;
         set({
           clubData: data,
-          members: [...data.members, ...data.coordinator],
-          coordinator: [...data.coordinator],
           error: null,
           loading: false,
         });
@@ -62,7 +61,9 @@ export const useClubById = create((set, get) => ({
     if (id && id == clubId) return;
     set({ clubEventsLoading: true });
     try {
-      const res = await fetch(`${url}/event/get-club-events/${clubId}`, {credentials: "include"});
+      const res = await fetch(`${url}/event/get-club-events/${clubId}`, {
+        credentials: "include",
+      });
       const resData = await res.json();
 
       if (!resData.ok) set({ clubEventsError: resData.msg });
@@ -78,6 +79,61 @@ export const useClubById = create((set, get) => ({
       console.log(err.message);
     } finally {
       set({ clubEventsLoading: false });
+    }
+  },
+
+  joinLoading: false,
+
+  joinClub: async (clubId) => {
+    set({ joinLoading: true });
+    try {
+      const res = await fetch(`${url}/club/join-request`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ clubId }),
+      });
+      const resData = await res.json();
+
+      if (!resData.ok) {
+        set({ error: resData.msg });
+      } else {
+        set({ error: null, clubData: resData.msg });
+      }
+    } catch (err) {
+      console.log(err.message);
+      set({ error: err.message });
+    } finally {
+      set({ joinLoading: false });
+    }
+  },
+}));
+
+export const useClubMembers = create((set) => ({
+  loading: false,
+  members: [],
+  requests: [],
+
+  getRequestForJoin: async (clubId) => {
+    set({loading: true});
+    try {
+      const res = await fetch(`${url}/club/member-requests`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ clubId }),
+      });
+      const resData = await res.json();
+      if(!resData.ok);
+      else set({requests: [...resData.msg]});
+    } catch (err) {
+      console.log(err.message)
+    } finally {
+      set({loading: false})
     }
   },
 }));

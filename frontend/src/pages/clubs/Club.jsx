@@ -1,7 +1,7 @@
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import BasicInfo from "../../components/club/BasicInfo";
 import ClubDetails from "../../components/club/ClubDetails";
-import { useClub, useClubById } from "../../store/useClub";
+import { useClubById } from "../../store/useClub";
 import { useEffect } from "react";
 import CirclesLoader from "../../components/loaders/CirclesLoader";
 
@@ -14,7 +14,6 @@ const Club = () => {
   useEffect(() => {
     getClubById(clubId);
   },[clubId]);
-  
   
   if(loading) return <CirclesLoader />
   if(error) return <p>{error}</p>

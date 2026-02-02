@@ -1,23 +1,23 @@
 import React from "react";
-import {
-  FaClock,
-  FaHourglassHalf,
-  FaShareAlt,
-  FaUserPlus,
-  FaUsers,
-} from "react-icons/fa";
+import { FaShareAlt, FaUserPlus, FaUsers } from "react-icons/fa";
 
 import { useAuth } from "../../store/useAuth";
 import StatusCard from "./StatusCard";
 import { useClubById } from "../../store/useClub";
+
 const BasicInfo = ({ clubData }) => {
   const { user } = useAuth();
-  const { members } = useClubById();
-  const member = user && members.some((member) => member.userId === user._id);
+  const { joinClub, joinLoading, error, success } = useClubById();
 
-  const addTo = () => {
-    console.log("added");
-  };
+  const member =
+    user &&
+    [...clubData.coordinator, ...clubData.members].some(
+      (member) => member.userId === user._id,
+    );
+
+  const request =
+    user && clubData.requestForJoin.some((req) => req === user._id);
+
   return (
     <div className="px-6 relative -mt-16">
       <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8">
@@ -55,20 +55,37 @@ const BasicInfo = ({ clubData }) => {
             {member ? (
               <span
                 className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-2
-                bg-gray-100 text-gray-700 hover:bg-gray-200`}
+                bg-gray-100 text-gray-700`}
               >
                 <FaUserPlus className="w-5 h-5" />
                 <span>Member ✓</span>
               </span>
-            ) : (
-              <button
-                onClick={addTo}
-                className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-2 
-                  bg-linear-to-r from-blue-600 to-purple-600 text-white hover:shadow-lg
-              `}
+            ) : request ? (
+              <span
+                className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center justify-center space-x-2
+                bg-gray-300 text-gray-700`}
               >
                 <FaUserPlus className="w-5 h-5" />
-                <span>Join Club</span>
+                <span>Request ✓</span>
+              </span>
+            ) : (
+              <button
+                onClick={() => joinClub(clubData._id)}
+                disabled={joinLoading}
+                className="relative px-6 py-3 rounded-xl font-semibold transition-all duration-300
+             flex items-center justify-center gap-2
+             bg-linear-to-r from-blue-600 to-purple-600 text-white
+             hover:shadow-lg disabled:opacity-60"
+              >
+                <span className={joinLoading ? "opacity-0" : "opacity-100"}>
+                  <FaUserPlus className="inline w-5 h-5 mr-2" />
+                  
+                </span>
+                {joinLoading ? (
+                  <span className="absolute flex items-center justify-center">
+                    <span className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  </span>
+                ): 'Join Club'}
               </button>
             )}
             <button className="px-6 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:border-blue-500 hover:text-blue-600 transition-colors flex items-center justify-center space-x-2">

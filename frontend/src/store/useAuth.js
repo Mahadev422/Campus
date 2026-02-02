@@ -44,18 +44,18 @@ export const useLogout = create((set) => ({
   error: null,
 
   handleLogout: async () => {
-    set({loading: true});
+    set({ loading: true });
     try {
       const res = await fetch(`${url}/auth/logout`, { credentials: "include" });
       const resData = await res.json();
-      if(!resData.ok) set({error: err.message});
+      if (!resData.ok) set({ error: err.message });
       else {
-        window.location.href = '/';
+        window.location.href = "/";
       }
     } catch (err) {
-      set({error: err.message});
+      set({ error: err.message });
     } finally {
-      set({loading: false});
+      set({ loading: false });
     }
   },
 }));
@@ -73,12 +73,31 @@ export const useAuth = create((set, get) => ({
       });
       const resData = await res.json();
       if (!resData.ok) {
-        set({ error: resData.msg });
+        set({ error: resData.msg, user: null });
       } else set({ user: { ...resData.msg }, error: null });
+    } catch (err) {
+      set({ error: err.message, user: null });
+    } finally {
+      set({ loading: false });
+    }
+  },
+
+  logoutLoading: false,
+  success: false,
+
+  handleLogout: async () => {
+    set({ logoutLoading: true });
+    try {
+      const res = await fetch(`${url}/auth/logout`, { credentials: "include" });
+      const resData = await res.json();
+      if (!resData.ok) set({ error: err.message });
+      else {
+        set({user: null, success: true});
+      }
     } catch (err) {
       set({ error: err.message });
     } finally {
-      set({ loading: false });
+      set({ logoutLoading: false });
     }
   },
 }));

@@ -1,13 +1,9 @@
-import React from "react";
-import { FaCamera, FaEdit, FaGraduationCap, FaShareAlt } from "react-icons/fa";
-import { HiOutlineAcademicCap, HiOutlineLocationMarker } from "react-icons/hi";
-import { userData } from "../../data/profile";
+import { FaCamera } from "react-icons/fa";
 import { useUser } from "../../store/useUser";
 
 const BasicDetails = () => {
-  const { user } = useUser();
-  // console.log(user);
-  const userData = { ...user };
+  const { userData } = useUser();
+  
   return (
     <div className="relative">
       {/* Cover Photo */}

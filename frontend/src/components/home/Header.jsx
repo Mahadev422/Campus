@@ -4,6 +4,7 @@ import { useAuth } from '../../store/useAuth';
 
 const Header = () => {
   const { user } = useAuth();
+  
   return (
     <header className="bg-linear-to-r overflow-auto no-scroll from-gray-900 to-gray-800 text-white">
       <div className="px-2 py-1">

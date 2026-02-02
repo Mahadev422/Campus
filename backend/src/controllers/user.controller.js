@@ -3,17 +3,17 @@ import { formatUserData } from "../utils/helper.js";
 
 export const getUserById = async (req, res) => {
   const { id } = req.params;
-  if(!id) return res.status(400).json({ok: false, msg: 'Id is required'});
+  if (!id) return res.status(400).json({ ok: false, msg: "Id is required" });
   try {
     const user = await User.findById(id);
-    if(!user) return res.status(404).json({ok: false, msg: 'User not found'});
-    const userData = formatUserData(user)
-    res.status(200).json({ok: true, msg: userData});
+    if (!user)
+      return res.status(404).json({ ok: false, msg: "User not found" });
+    const userData = formatUserData(user);
+    res.status(200).json({ ok: true, msg: userData });
   } catch (err) {
-    res.status(400).json({ok: false, msg: err.message});
+    res.status(400).json({ ok: false, msg: err.message });
   }
 };
-
 
 export const createUser = async (req, res) => {
   if (!req.body)
@@ -21,7 +21,8 @@ export const createUser = async (req, res) => {
       ok: false,
       msg: "Name, email, userName, degree and department are required.",
     });
-  const { name, email, userName, degree, phone, department, password } = req.body;
+  const { name, email, userName, degree, phone, department, password } =
+    req.body;
   if (!name || !email || !userName || !degree || !department || !password)
     return res.status(400).json({
       ok: false,
@@ -30,12 +31,13 @@ export const createUser = async (req, res) => {
 
   try {
     const existingUser = await User.findOne({
-      $or: [
-        { "contact.email": email.toLowerCase() },
-        { userName: userName },
-      ],
+      $or: [{ "contact.email": email.toLowerCase() }, { userName: userName }],
     }).select("name");
-    if (existingUser) return res.json({ ok: false, msg: `Username exist: ${existingUser.name}` });
+    if (existingUser)
+      return res.json({
+        ok: false,
+        msg: `Username exist: ${existingUser.name}`,
+      });
     const user = {
       name,
       userName,
@@ -53,8 +55,13 @@ export const createUser = async (req, res) => {
 
 export const getMyDetails = async (req, res) => {
   const userId = req.userId;
-  const user = await User.findById(userId);
+  try {
+    const user = await User.findById(userId).populate('clubsJoined', '_id clubName category logo');
+    if (!user)
+      return res.status(404).json({ ok: false, msg: "User not found" });
+    res.status(200).json({ ok: true, msg: user });
+  } catch (err) {
+    res.status(500).json({ ok: false, msg: err.message });
+  }
+};
 
-  if(!user) return res.status(404).json({ok: false, msg: 'User not found'});
-  res.status(200).json({ok: true, msg: user});
-}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import JoinedClubCard from "../../components/profile/JoinedClubCard";
 import { FaUserPlus } from "react-icons/fa";
 import { userData } from "../../data/profile";
@@ -8,7 +8,6 @@ import { useUser } from "../../store/useUser";
 const MyClubs = () => {
 
   const {userData} = useUser();
-  // console.log(user);
 
   return (
     <div className="space-y-8">
@@ -27,11 +26,11 @@ const MyClubs = () => {
           {userData.clubsJoined.length == 0 ? (
             <div className="bg-gray-100 px-4 py-6 rounded">
               <p className="text-center text-2xl font-bold">
-                You have not jooined any Club
+                You have not joined any Club
               </p>
             </div>
             ) : userData.clubsJoined.map((club) => (
-            <JoinedClubCard key={club.id} club={club} />
+            <JoinedClubCard key={club._id} club={club} />
           ))}
         </div>
 

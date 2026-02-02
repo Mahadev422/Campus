@@ -15,7 +15,9 @@ const ProfileOverview = () => {
             <FaEdit className="w-5 h-5" />
           </button>
         </div>
-        <br /><hr /><br />
+        <br />
+        <hr />
+        <br />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-3">
             <div className="flex flex-row gap-3">
@@ -37,7 +39,7 @@ const ProfileOverview = () => {
               </div>
             </div>
           </div>
-<hr />
+          <hr />
           <div>
             <div className="flex flex-row gap-3">
               <div className="text-sm text-gray-500">Year :</div>
@@ -63,8 +65,7 @@ const ProfileOverview = () => {
 
       {/* Skills & Interests */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        
-    <StatsCard userData={userData} />
+        <StatsCard userData={userData} />
       </div>
     </div>
   );

@@ -3,8 +3,8 @@ import MemberCard from "../../components/club/MemberCard";
 import { useClubById } from "../../store/useClub";
 
 const ClubMembers = () => {
-  const {members} = useClubById();
-  
+  const {clubData} = useClubById();
+  const members = [...clubData.coordinator, ...clubData.members]
   return (
     <div className="bg-white rounded-2xl shadow-lg p-8">
       <div className="flex justify-between items-center mb-6">
