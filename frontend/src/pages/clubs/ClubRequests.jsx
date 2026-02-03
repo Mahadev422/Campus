@@ -19,8 +19,10 @@ const ClubRequests = () => {
 
   if (!admin)
     return (
-      <div>
-        <p>You are not admin</p>
+      <div className="flex items-center justify-center h-full">
+        <p className="text-lg bg-red-100 p-4 rounded-md font-medium text-red-600">
+          You are not authorized to view this page.
+        </p>
       </div>
     );
 

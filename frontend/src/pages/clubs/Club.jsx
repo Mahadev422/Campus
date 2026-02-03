@@ -4,23 +4,24 @@ import ClubDetails from "../../components/club/ClubDetails";
 import { useClubById } from "../../store/useClub";
 import { useEffect } from "react";
 import CirclesLoader from "../../components/loaders/CirclesLoader";
+import Error from "../../components/loaders/Error";
 
 const Club = () => {
   const { clubId } = useParams();
   const location = useLocation();
 
-  const {getClubById, loading, error, clubData} = useClubById();
+  const { getClubById, loading, error, clubData } = useClubById();
   // const clubData = {...club}
   useEffect(() => {
     getClubById(clubId);
-  },[clubId]);
-  
-  if(loading) return <CirclesLoader />
-  if(error) return <p>{error}</p>
+  }, [clubId]);
+
+  if (loading) return <CirclesLoader />;
   if (Object.keys(clubData).length == 0) return <CirclesLoader />;
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
       {/* Hero Section with Cover Image */}
+      {error && <Error error={error} />}
       <div className="relative">
         <div className="h-64 md:h-80 overflow-hidden">
           <img

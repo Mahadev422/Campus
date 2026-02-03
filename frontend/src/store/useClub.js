@@ -107,6 +107,7 @@ export const useClubById = create((set, get) => ({
       set({ error: err.message });
     } finally {
       set({ joinLoading: false });
+      setTimeout(() => set({error: null}), 2000);
     }
   },
 }));
