@@ -1,4 +1,4 @@
-import { FaShareAlt, FaTicketAlt } from "react-icons/fa";
+import { FaClosedCaptioning, FaRegClosedCaptioning, FaShareAlt, FaTicketAlt } from "react-icons/fa";
 import {
   HiOutlineCalendar,
   HiOutlineClock,
@@ -8,18 +8,18 @@ import {
 import { useGetEventById } from "../../store/useEvent";
 import { useHelper } from "../../store/useHelper";
 import { useAuth } from "../../store/useAuth";
+import ButtonLoader from '../../components/loaders/ButtonLoader';
+
 
 const EventBasicInfo = () => {
-  const { event, loading } = useGetEventById();
+  const { event, loading, addParticipant, addParticipantLoader, cancelParticipant } = useGetEventById();
   const { firstCapital, formatDate } = useHelper();
   const { user } = useAuth();
 
-  const handleRegister = () => {
-    console.log('register');
-  }
 
-  const participant = user && event.participants.some((member) => member.userId === user._id);
   if (loading || Object.keys(event).length == 0) return <p>Loading...</p>;
+  const participant =
+    user && event.participants.some((member) => member === user._id);
   return (
     <div className="px-6 relative -mt-48">
       <div className="bg-white/95 backdrop-blur-sm rounded-3xl shadow-2xl p-8">
@@ -114,7 +114,7 @@ const EventBasicInfo = () => {
                   <div className="text-gray-500">Capacity</div>
                   <div className="font-bold text-gray-900">
                     {event.participants.length}
-                    {event.seats == -1 ? '' : `/${event.seats}`}
+                    {event.seats == -1 ? "" : `/${event.seats}`}
                   </div>
                 </div>
               </div>
@@ -124,22 +124,26 @@ const EventBasicInfo = () => {
           {/* Action Buttons */}
           <div className="flex justify-between gap-4">
             <div className="grid grid-cols-2 gap-2">
-              {participant ? (<span
-                className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center space-x-2
-                  bg-gray-100 text-gray-700 hover:bg-gray-200
+              {participant ? (
+                <button
+                onClick={() => cancelParticipant(event._id)}
+                  className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center space-x-2
+                  bg-red-300 text-red-700
                 `}
-              >
-                <FaTicketAlt className="w-6 h-6" />
-                <span>Registered ✓</span>
-              </span>) : (<button
-              onClick={handleRegister}
-                className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center space-x-2 
+                >
+                  <span>{addParticipantLoader ? <ButtonLoader /> : '✕ Cancel'}</span>
+                </button>
+              ) : (
+                <button
+                  onClick={() => addParticipant(event._id)}
+                  className={`px-8 py-4 rounded-xl font-bold text-lg transition-all duration-300 flex items-center justify-center space-x-2 
                     bg-linear-to-r from-blue-600 to-purple-600 text-white hover:shadow-xl
                 `}
-              >
-                <FaTicketAlt className="w-6 h-6" />
-                <span>Register Now</span>
-              </button>)}
+                >
+                  <FaTicketAlt className="w-6 h-6" />
+                  <span>{addParticipantLoader ? <ButtonLoader /> : 'Register Now'}</span>
+                </button>
+              )}
               <div className="flex space-x-3">
                 <button className="flex-1 py-3 border border-gray-300 text-gray-700 rounded-xl font-semibold hover:border-blue-500 hover:text-blue-600 transition-colors flex items-center justify-center space-x-2">
                   <FaShareAlt className="w-5 h-5" />
@@ -147,7 +151,6 @@ const EventBasicInfo = () => {
                 </button>
               </div>
             </div>
-           
           </div>
         </div>
       </div>

@@ -62,7 +62,6 @@ export const useGetAllEvent = create((set) => ({
 export const useGetEventById = create((set) => ({
   loading: false,
   error: null,
-  eventData: {},
   event: {},
 
   getEventById: async (eventId) => {
@@ -71,17 +70,100 @@ export const useGetEventById = create((set) => ({
       const res = await fetch(`${url}/event/get-event/${eventId}`);
       const resData = await res.json();
       if (!resData.ok) set({ error: resData.msg });
-      else
-        set({
-          error: null,
-          eventData: { ...resData.msg },
-          event: { ...resData.msg },
-        });
+      else set({ event: { ...resData.msg } });
     } catch (err) {
       console.log(err.message);
       set({ error: err.message });
     } finally {
       set({ loading: false });
+      setTimeout(() => set({ error: null }));
+    }
+  },
+
+  addParticipantLoader: false,
+  addParticipant: async (eventId) => {
+    set({ addParticipantLoader: true });
+    try {
+      const res = await fetch(`${url}/event/add-participant`, {
+        credentials: "include",
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ eventId }),
+      });
+
+      const resData = await res.json();
+      if (!resData.ok) {
+        set({ error: resData.msg });
+      } else {
+        set({ event: resData.msg });
+      }
+    } catch (err) {
+      console.log(err.message);
+      set({ error: err.message });
+    } finally {
+      set({ addParticipantLoader: false });
+      setTimeout(() => set({ error: null }), 2000);
+    }
+  },
+  cancelParticipant: async (eventId) => {
+    set({ addParticipantLoader: true });
+    try {
+      const res = await fetch(`${url}/event/cancel-participant`, {
+        credentials: "include",
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ eventId }),
+      });
+
+      const resData = await res.json();
+
+      if (!resData.ok) {
+        set({ error: resData.msg });
+      } else {
+        set({ event: resData.msg });
+      }
+    } catch (err) {
+      console.log(err.message);
+      set({ error: err.message });
+    } finally {
+      set({ addParticipantLoader: false });
+      setTimeout(() => set({ error: null }), 2000);
+    }
+  },
+}));
+
+export const useGetParticipants = create((set) => ({
+  participantsLoader: false,
+  error: null,
+  participants: [],
+
+  getParticipants: async (eventId) => {
+    try {
+      const res = await fetch(`${url}/event/get-participants`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ eventId }),
+        credentials: "include",
+      });
+      const resData = await res.json();
+      console.log(resData);
+      if (!resData.ok) {
+        set({ error: resData.msg });
+      } else {
+        set({ participants: resData.msg });
+      }
+    } catch (err) {
+      console.log(err.message);
+      set({ error: err.message });
+    } finally {
+      set({ loading: false });
+      setTimeout(() => set({ error: null }));
     }
   },
 }));

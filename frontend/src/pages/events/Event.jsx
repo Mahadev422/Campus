@@ -5,10 +5,11 @@ import EventInfo from "../../components/event/EventInfo";
 import EventBasicInfo from "../../components/event/EventBasicInfo";
 import { useGetEventById } from "../../store/useEvent";
 import { useEffect } from "react";
+import Error from '../../components/loaders/Error';
 
 // Main Event Detail Page
 const Event = () => {
-  const { getEventById, loading, event } = useGetEventById();
+  const { getEventById, loading, event, error } = useGetEventById();
   // Sample event data
   const {eventId} = useParams();
 
@@ -22,6 +23,7 @@ const Event = () => {
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
       {/* Hero Section with Cover Image */}
+      {error && <Error error={error} />}
       <div className="relative">
         <div className="h-96 overflow-hidden">
           <img

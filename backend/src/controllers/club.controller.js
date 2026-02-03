@@ -65,18 +65,12 @@ export const getClubById = async (req, res) => {
 };
 
 export const addRequestForJoin = async (req, res) => {
-  if (!req.body) {
+  if (!req.body || !req.body.clubId) {
     return res.status(400).json({ ok: false, msg: "ClubId is required." });
   }
   const { clubId } = req.body;
   const userId = req.userId;
 
-  if (!clubId) {
-    return res.status(400).json({ ok: false, msg: "ClubId is required." });
-  }
-  if (!userId) {
-    return res.status(400).json({ ok: false, msg: "User is not logged in." });
-  }
   try {
     const club = await Club.findByIdAndUpdate(
       clubId,
