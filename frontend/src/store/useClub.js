@@ -49,6 +49,7 @@ export const useClubById = create((set, get) => ({
       set({ error: err.message });
     } finally {
       set({ loading: false });
+      setTimeout(() => set({error: null}), 2000)
     }
   },
 
@@ -65,13 +66,11 @@ export const useClubById = create((set, get) => ({
         credentials: "include",
       });
       const resData = await res.json();
-
+      
       if (!resData.ok) set({ clubEventsError: resData.msg });
       else {
         set({
           clubEvents: resData.msg,
-          clubEventsLoading: false,
-          clubEventsError: null,
           id: clubId,
         });
       }
@@ -79,6 +78,7 @@ export const useClubById = create((set, get) => ({
       console.log(err.message);
     } finally {
       set({ clubEventsLoading: false });
+      setTimeout(() => set({clubEventsError: null}), 2000)
     }
   },
 
@@ -129,12 +129,14 @@ export const useClubMembers = create((set) => ({
         body: JSON.stringify({ clubId }),
       });
       const resData = await res.json();
-      if(!resData.ok);
+      if(!resData.ok) set({error: resData.msg});
       else set({requests: [...resData.msg]});
     } catch (err) {
-      console.log(err.message)
+      console.log(err.message);
+      set({error: err.message})
     } finally {
-      set({loading: false})
+      set({loading: false});
+      setTimeout(() => set({error: null}), 2000)
     }
   },
 }));

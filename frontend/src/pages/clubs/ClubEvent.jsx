@@ -8,13 +8,12 @@ import { useAuth } from "../../store/useAuth";
 import { useParams } from "react-router-dom";
 
 const ClubEvent = () => {
-  const { clubEvents, clubEventsLoading, getCLubEvents, coordinator } =
+  const { clubEvents, clubEventsLoading, getCLubEvents, clubData } =
     useClubById();
   const { user } = useAuth();
   const [create, setCreate] = useState(true);
-  
   const admin =
-    user && coordinator.some((member) => member.userId === user._id);
+    user && clubData.coordinator.some((member) => member.userId === user._id);
 
   const { clubId } = useParams();
 
@@ -50,7 +49,7 @@ const ClubEvent = () => {
       {create ? (
         clubEventsLoading ? (
           <p>Loading...</p>
-        ) : clubEvents.length == 0 ? (
+        ) : clubEvents.length === 0 ? (
           <p>No event created by this club</p>
         ) : (
           clubEvents.map((event) => (<ClubEventCard key={event._id} event={event} />

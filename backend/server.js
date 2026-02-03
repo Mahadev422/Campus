@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import path from "path";
 import { fileURLToPath } from "url";
-import cors from 'cors';
+// import cors from 'cors';
 
 
 import clubRouter from "./src/routes/club.route.js";

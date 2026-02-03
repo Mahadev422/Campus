@@ -13,9 +13,7 @@ const ClubRequests = () => {
 
   useEffect(() => {
     getRequestForJoin(clubData._id);
-    console.log("ok");
-  }, [0]);
-  console.log(requests);
+  }, [clubData]);
 
   if (!admin)
     return (

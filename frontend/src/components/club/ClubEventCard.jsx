@@ -18,7 +18,11 @@ const ClubEventCard = ({ event }) => {
           </p>
           <span>
             <p>{event.participantsCiunt}</p>
-            <p>{event.seats}</p>
+            <span>
+              <p>Seats</p>
+              <p>{event.participantsCount} {event.seats == -1 ? '' : `/${event.seats}`}</p>
+            </span>
+            
           </span>
         </div>
 
