@@ -20,7 +20,6 @@ import {
 } from "react-icons/hi";
 
 import { Link, Navigate, Outlet } from "react-router-dom";
-import { userData } from "../../data/profile";
 import BasicDetails from "../../components/profile/BasicDetails";
 import { useUser } from "../../store/useUser";
 import { useAuth, useLogin } from "../../store/useAuth";
@@ -61,10 +60,10 @@ const Me = () => {
                     <div>
                       <div className="text-sm text-gray-500">Email</div>
                       <a
-                        href={`mailto:${userData.contact.email}`}
+                        href={`mailto:${userData.contact?.email}`}
                         className="font-medium text-blue-600 hover:underline"
                       >
-                        {userData.contact.email}
+                        {userData.contact?.email}
                       </a>
                     </div>
                   </div>
