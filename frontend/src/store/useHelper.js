@@ -20,7 +20,7 @@ import {
 } from "react-icons/fa";
 import { create } from "zustand";
 
-export const useHelper = create(() => ({
+export const useHelper = create((set, get) => ({
   eventTypes: [
     "conference",
     "workshop",
@@ -110,7 +110,19 @@ export const useHelper = create(() => ({
     });
     return formatted;
   },
+
   firstCapital: (str) => {
     return str.charAt(0).toUpperCase() + str.slice(1);
+  },
+
+  addFourYears: (iso) => {
+    const date = new Date(iso);
+    date.setFullYear(date.getFullYear() + 4);
+    const formatted = date.toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    });
+    return formatted;
   },
 }));

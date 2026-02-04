@@ -10,8 +10,8 @@ function App() {
   const { loading, checkLogin, user} = useAuth();
 
   useEffect(() => {
-    if (!user) checkLogin();
-  }, [user]);
+    checkLogin();
+  }, [0]);
   
   if (loading) return <WebLoader />;
   return (

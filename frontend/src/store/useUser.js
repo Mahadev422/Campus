@@ -5,7 +5,7 @@ const url = import.meta.env.VITE_BACKEND;
 export const useUser = create((set, get) => ({
   loading: false,
   userData: {},
-
+  user: {},
   getMyData: async () => {
     try {
       set({ loading: true });
@@ -16,7 +16,7 @@ export const useUser = create((set, get) => ({
       if (!resData.ok) {
         set({ error: resData.msg });
         window.location.href = "/login";
-      } else set({ userData: { ...resData.msg } });
+      } else set({ userData: { ...resData.msg }, user: { ...resData.msg } });
     } catch (err) {
     } finally {
       set({ loading: false });

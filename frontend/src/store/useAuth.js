@@ -64,21 +64,23 @@ export const useAuth = create((set, get) => ({
   loading: false,
   user: null,
   error: null,
+  userLoader: false,
 
   checkLogin: async () => {
     try {
-      set({ loading: true });
+      set({ loading: true, userLoader: true });
       const res = await fetch(`${url}/auth/me`, {
         credentials: "include",
       });
       const resData = await res.json();
       if (!resData.ok) {
         set({ error: resData.msg, user: null });
-      } else set({ user: { ...resData.msg }, error: null });
+      } else set({ user: { ...resData.msg }});
     } catch (err) {
       set({ error: err.message, user: null });
     } finally {
-      set({ loading: false });
+      set({ loading: false, userLoader: false });
+      setTimeout(() => set({error: null}), 2000)
     }
   },
 
@@ -93,6 +95,7 @@ export const useAuth = create((set, get) => ({
       if (!resData.ok) set({ error: err.message });
       else {
         set({user: null, success: true});
+        window.location.href = '/';
       }
     } catch (err) {
       set({ error: err.message });

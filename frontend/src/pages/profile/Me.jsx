@@ -29,16 +29,15 @@ import { IoMdSettings } from "react-icons/io";
 // Main Profile Page Component
 const Me = () => {
   const { getMyData, userData, loading } = useUser();
-  const { user } = useAuth();
+  const { user, userLoader } = useAuth();
 
   useEffect(() => {
-    if (Object.keys(userData).length == 0) getMyData();
-  }, [userData]);
+    getMyData();
+  }, [0]);
 
 
-  if (loading) return <CirclesLoader />;
+  if (loading || userLoader) return <CirclesLoader />;
   if (!user) return <Navigate to="/login" />;
-  if (Object.keys(userData).length == 0) return <p>Loading...</p>;
   
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
