@@ -1,12 +1,18 @@
 import { FaCamera } from "react-icons/fa";
 import { useUser } from "../../store/useUser";
+import { useState } from "react";
+import ImageUpload from "../home/ImageUpload";
 
 const BasicDetails = () => {
-  const { userData } = useUser();
-  
+  const { userData, changeProfilePic } = useUser();
+  const [upload, setUpload] = useState(false);
+
   return (
     <div className="relative">
       {/* Cover Photo */}
+      {/* <div> */}
+        {upload && <div className="relative"><ImageUpload set={setUpload} onUpload={changeProfilePic} /></div>}
+      {/* </div> */}
       <div className="h-64 md:h-80 overflow-hidden">
         <img
           src={userData.coverImage}
@@ -17,30 +23,30 @@ const BasicDetails = () => {
       </div>
 
       {/* Profile Info Overlay */}
-      <div className="container mx-auto px-6 relative -mt-24">
+      <div className="px-6 relative -mt-24">
         <div className="bg-white rounded-3xl shadow-2xl p-8">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
             {/* Profile Picture and Basic Info */}
-            <div className="flex items-start justify-evenly space-x-6">
-              <div className="relative flex-1 align-middle">
+            <div className="flex items-start justify-evenly space-x-4">
+              <div className="relative flex-1 w-full">
                 <img
                   src={userData.profilePic}
                   alt={userData.name}
-                  className="w-100 rounded-2xl object-cover border-8 border-white shadow-2xl"
+                  className="w-screen rounded-2xl object-cover border-8 border-white shadow-2xl"
                 />
-                <button className="absolute -bottom-3 -right-3 p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 shadow-lg">
-                  <FaCamera className="w-5 h-5" />
+                <button onClick={() => setUpload(true)} className="absolute -bottom-3 -right-3 p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 shadow-lg">
+                  <FaCamera className="md:w-5 md:h-5 h-3 w-3" />
                 </button>
               </div>
 
               <div className="flex-2">
-                <div className="pt-2">
+                <div className="pt-2 grid text-2xl">
                   <div className="flex items-center space-x-3 mb-2">
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+                    <h1 className="text-2xl md:text-5xl font-bold font-serif text-gray-900">
                       {userData.name}
                     </h1>
                   </div>
-                  <p className="text-gray-700 mb-6 md:text-2xl max-w-2xl">{userData.bio}</p>
+                  <p className="text-gray-700 font-mono text-xs mb-6 md:text-2xl max-h-30 overflow-y-auto">{userData.bio}</p>
                 </div>
               </div>
             </div>

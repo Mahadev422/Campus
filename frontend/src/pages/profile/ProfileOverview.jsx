@@ -24,13 +24,13 @@ const ProfileOverview = () => {
             <div className="flex flex-row gap-3">
               <div className="text-sm text-gray-500">Degree :</div>
               <div className="font-bold text-gray-900">
-                {userData.academic.degree}
+                {userData.academic?.degree}
               </div>
             </div>
             <div className="flex flex-row gap-3">
               <div className="text-sm text-gray-500">Department :</div>
               <div className="font-bold text-gray-900">
-                {userData.academic.department}
+                {userData.academic?.department}
               </div>
             </div>
           </div>
@@ -39,19 +39,19 @@ const ProfileOverview = () => {
             <div className="flex flex-row gap-3">
               <div className="text-sm text-gray-500">Semester :</div>
               <div className="font-bold text-gray-900">
-                {userData.academic.semester}
+                {userData.academic?.semester}
               </div>
             </div>
             <div className="flex flex-row gap-3">
               <div className="text-sm text-gray-500">CGPA :</div>
               <div className="font-bold text-gray-900">
-                {userData.academic.cgpa.$numberDecimal}
+                {userData.academic?.cgpa.$numberDecimal}
               </div>
             </div>
             <div className="flex flex-row gap-3">
               <div className="text-sm text-gray-500">Expected Graduation :</div>
               <div className="font-bold text-gray-900">
-                {addFourYears(userData.createdAt)}
+                {addFourYears(userData?.createdAt)}
               </div>
             </div>
           </div>

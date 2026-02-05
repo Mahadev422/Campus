@@ -17,7 +17,7 @@ const AllEvent = () => {
   const { getEvents, events, loading } = useGetAllEvent();
 
   useEffect(() => {
-    getEvents();
+    if(events.length == 0) getEvents();
   }, [0]);
 
 

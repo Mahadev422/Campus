@@ -72,10 +72,10 @@ const Me = () => {
                     <div>
                       <div className="text-sm text-gray-500">Phone</div>
                       <a
-                        href={`tel:${userData.contact.phone}`}
+                        href={`tel:${userData.contact?.phone}`}
                         className="font-medium text-blue-600 hover:underline"
                       >
-                        {userData.contact.phone}
+                        {userData.contact?.phone}
                       </a>
                     </div>
                   </div>
@@ -84,10 +84,10 @@ const Me = () => {
                     <div>
                       <div className="text-sm text-gray-500">Website</div>
                       <a
-                        href={userData.contact.website}
+                        href={userData.contact?.website}
                         className="font-medium text-blue-600 hover:underline"
                       >
-                        {userData.contact.website}
+                        {userData.contact?.website}
                       </a>
                     </div>
                   </div>

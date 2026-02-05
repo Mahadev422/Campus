@@ -137,7 +137,7 @@ const userSchema = new mongoose.Schema(
     bio: {
       type: String,
       maxlength: 300,
-      default: "I am the future of Country.",
+      default: "A passionate new college student with a strong desire to learn, grow, and explore diverse opportunities. Actively seeking knowledge, collaboration, and experiences that contribute to personal development and long-term professional succes."
     },
   },
   { timestamps: true },

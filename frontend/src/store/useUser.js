@@ -22,4 +22,35 @@ export const useUser = create((set, get) => ({
       set({ loading: false });
     }
   },
+
+  error: null,
+
+  changeProfilePic: async (image, close) => {
+    console.log(image);
+    if(!image) return;
+    try {
+      const res = await fetch(`${url}/user/change-profile`, {
+        method: 'PATCH',
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ image }),
+      });
+
+      const resData = await res.json();
+      console.log(resData);
+      if(!resData.ok) {
+        set({error: resData.msg});
+      }
+      else {
+        set({userData: resData.msg});
+        close(false);
+      }
+    } catch (err) {
+      console.log(err.message);
+    } finally {
+      setTimeout(() => set({error: null}), 2000); 
+    }
+  }
 }));

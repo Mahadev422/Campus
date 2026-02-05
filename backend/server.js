@@ -40,6 +40,10 @@ app.use(cookieParser());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// const check = (req, res, next) => {
+//   console.log('ok');
+//   next();
+// }
 
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);

@@ -65,3 +65,22 @@ export const getMyDetails = async (req, res) => {
   }
 };
 
+export const changeMyProfilePic =async (req, res) => {
+  const userId = req.userId;
+
+  if(!req.body || !req.body.image) {
+    return res.status(400).json({ok: false, msg: 'Image is required'});
+  }
+  try {
+    const {image} = req.body;
+    const user = await User.findByIdAndUpdate(userId, {profilePic: image}, {new: true});
+    if (!user) {
+      return res.status(404).json({ ok: false, msg: "User not found" });
+    }
+    res.status(201).json({ok: true, msg: user});
+  } catch (err) {
+    console.log(err.message)
+    res.status(500).json({ok: false, msg: err.message});
+  }
+  
+}
