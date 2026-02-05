@@ -2,6 +2,7 @@ import MemberCard from "../../components/club/MemberCard";
 import { useClubById, useClubMembers } from "../../store/useClub";
 import { useAuth } from "../../store/useAuth";
 import { useEffect } from "react";
+import RequestMember from "../../components/club/RequestMember";
 
 const ClubRequests = () => {
   const { clubData } = useClubById();
@@ -37,34 +38,7 @@ const ClubRequests = () => {
           </div>
         ) : (
           requests.map((member) => (
-            <div
-              key={member._id}
-              className="flex items-center gap-4 rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition hover:shadow-md"
-            >
-              {/* Profile Image */}
-              <img
-                src={member.profilePic || "/avatar.png"}
-                alt={member.name}
-                className="h-12 w-12 rounded-full object-cover ring-1 ring-gray-200"
-              />
-
-              {/* Member Info */}
-              <div className="flex-1">
-                <p className="font-semibold text-gray-900">{member.name}</p>
-
-                <p className="text-sm text-gray-500">
-                  {member.academic.department} · {member.academic.degree}
-                </p>
-              </div>
-
-              {/* CGPA */}
-              <div className="text-right">
-                <p className="text-xs text-gray-500">CGPA</p>
-                <p className="font-semibold text-gray-800">
-                  {member.academic.cgpa.$numberDecimal}
-                </p>
-              </div>
-            </div>
+            <RequestMember key={member._id} admin={admin} member={member} />
           ))
         )}
       </div>

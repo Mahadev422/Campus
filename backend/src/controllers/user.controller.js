@@ -56,7 +56,9 @@ export const createUser = async (req, res) => {
 export const getMyDetails = async (req, res) => {
   const userId = req.userId;
   try {
-    const user = await User.findById(userId).populate('clubsJoined', '_id clubName category logo');
+    const user = await User.findById(userId)
+    .populate('clubsJoined', '_id clubName category logo')
+    .populate('eventsParticipated', '_id title venue to');
     if (!user)
       return res.status(404).json({ ok: false, msg: "User not found" });
     res.status(200).json({ ok: true, msg: user });

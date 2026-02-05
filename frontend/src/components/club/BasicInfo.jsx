@@ -34,12 +34,11 @@ const BasicInfo = ({ clubData }) => {
             </div>
             <div>
               <div className="flex items-center space-x-3 mb-2">
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+                <h1 className="text-3xl font-serif md:text-4xl font-bold text-gray-900">
                   {clubData.clubName}
                 </h1>
-                <span className="px-4 py-1 bg-blue-100 text-blue-600 rounded-full font-semibold">
-                  {clubData.category.charAt(0).toUpperCase() +
-                    clubData.category.slice(1)}
+                <span className="px-4 py-1 capitalize bg-blue-100 text-blue-600 rounded-full font-semibold">
+                  {clubData.category}
                 </span>
               </div>
               <p className="text-xl text-gray-600 mb-4">{clubData.tagline}</p>

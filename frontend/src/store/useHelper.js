@@ -101,6 +101,7 @@ export const useHelper = create((set, get) => ({
     return icon;
   },
   formatDate: (iso) => {
+    if(!iso) return null;
     const date = new Date(iso);
 
     const formatted = date.toLocaleDateString("en-IN", {
@@ -125,4 +126,19 @@ export const useHelper = create((set, get) => ({
     });
     return formatted;
   },
+
+  isBeforeToday: (isoDate) => {
+  if (!isoDate) return false;
+
+  const input = new Date(isoDate);
+  if (isNaN(input)) return false;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  input.setHours(0, 0, 0, 0);
+
+  return (input < today) ? 'Completed' : 'Upcoming';
+}
+
 }));

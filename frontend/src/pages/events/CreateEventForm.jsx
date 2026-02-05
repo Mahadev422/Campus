@@ -79,8 +79,8 @@ const CreateEventForm = () => {
               >
                 <option value="">Select</option>
                 {eventTypes.map((type, i) => (
-                  <option key={i} value={type}>
-                    {type.charAt(0).toUpperCase() + type.slice(1)}
+                  <option className="capitalize" key={i} value={type}>
+                    {type}
                   </option>
                 ))}
               </select>

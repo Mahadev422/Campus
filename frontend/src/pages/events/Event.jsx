@@ -17,7 +17,6 @@ const Event = () => {
     getEventById(eventId);
   },[eventId]);
 
-    
   if(loading) return <p>Loading...</p>
   
   return (

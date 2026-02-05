@@ -11,15 +11,12 @@ const MyEvents = () => {
   return (
     <div className="space-y-8">
       {/* Participated Events */}
-      <div className="bg-white rounded-2xl shadow-lg p-8">
+      <div className="bg-white rounded-2xl shadow-lg p-4 md:p-8">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">Events History</h2>
           </div>
-          <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 flex items-center space-x-2">
-            <FaPlus className="w-5 h-5" />
-            <Link to="/events">New Events</Link>
-          </button>
+            <Link className="px-6 py-2 bg-blue-600 font-bold text-white rounded-lg hover:bg-blue-700 flex items-center space-x-2" to="/events">Events</Link>
         </div>
 
         <div className="grid grid-cols-1 gap-6">

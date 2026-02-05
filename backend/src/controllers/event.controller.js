@@ -129,6 +129,8 @@ export const addParticipant = async (req, res) => {
     if (!event) {
       return res.status(404).json({ ok: false, msg: "Event not found" });
     }
+
+    await User.findByIdAndUpdate(userId, { $addToSet: {eventsParticipated: eventId}})
     res.status(201).json({ ok: true, msg: event });
   } catch (err) {
     console.log(err.message);
@@ -153,6 +155,7 @@ export const cancelParticipant = async (req, res) => {
     if (!event) {
       return res.status(404).json({ ok: false, msg: "Event not found" });
     }
+    await User.findByIdAndUpdate(userId, { $pull: {eventsParticipated: eventId}});
     res.status(201).json({ ok: true, msg: event });
   } catch (err) {
     console.log(err.message);

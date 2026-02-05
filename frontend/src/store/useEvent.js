@@ -152,7 +152,6 @@ export const useGetParticipants = create((set) => ({
         credentials: "include",
       });
       const resData = await res.json();
-      console.log(resData);
       if (!resData.ok) {
         set({ error: resData.msg });
       } else {

@@ -8,7 +8,7 @@ const EventOverview = () => {
   return (
     <div className="space-y-8">
       {/* Event Description */}
-      <div className="bg-white rounded-2xl shadow-lg p-8">
+      <div className="bg-white rounded-2xl shadow-lg md:p-8 p-6 font-mono">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
           About This Event
         </h2>

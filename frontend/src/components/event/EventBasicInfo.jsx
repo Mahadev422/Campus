@@ -13,7 +13,7 @@ import ButtonLoader from '../../components/loaders/ButtonLoader';
 
 const EventBasicInfo = () => {
   const { event, loading, addParticipant, addParticipantLoader, cancelParticipant } = useGetEventById();
-  const { firstCapital, formatDate } = useHelper();
+  const { formatDate, isBeforeToday } = useHelper();
   const { user } = useAuth();
 
 
@@ -26,15 +26,15 @@ const EventBasicInfo = () => {
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
           <div className="flex-1">
             <div className="flex items-center space-x-3 mb-4">
-              <span className="px-4 py-2 bg-blue-600 text-white rounded-full font-semibold">
-                {firstCapital(event.eventType)}
+              <span className="px-4 capitalize py-2 bg-blue-600 text-white rounded-full font-semibold">
+                {event.eventType}
               </span>
               <span className="px-4 py-2 bg-green-100 text-green-800 rounded-full font-semibold">
-                {firstCapital(event.status)}
+                {isBeforeToday(event.to.date)}
               </span>
             </div>
 
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+            <h1 className="text-4xl font-serif md:text-5xl font-bold text-gray-900 mb-4">
               {event.title}
             </h1>
 
@@ -42,7 +42,7 @@ const EventBasicInfo = () => {
 
             {/* Quick Info Grid */}
             <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
-              <div className="bg-gray-200 p-2 rounded-md">
+              <div className="bg-gray-200 p-3 rounded-md">
                 <h1 className="font-bold font-serif">Starting</h1>
                 <div className="flex items-center space-x-4">
                   <div className="p-2 bg-blue-100 rounded-xl">
@@ -68,7 +68,7 @@ const EventBasicInfo = () => {
                 </div>
               </div>
 
-              <div className="bg-gray-200 p-2 rounded-md">
+              <div className="bg-gray-200 p-3 rounded-md">
                 <h1 className="font-bold font-serif">Ending</h1>
                 <div className="flex items-center space-x-4">
                   <div className="p-2 bg-blue-100 rounded-xl">
