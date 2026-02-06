@@ -46,7 +46,7 @@ const BasicDetails = () => {
                       {userData.name}
                     </h1>
                   </div>
-                  <p className="text-gray-700 font-mono text-xs mb-6 md:text-2xl max-h-30 overflow-y-auto">{userData.bio}</p>
+                  <p className="text-gray-700 font-mono text-xs mb-6 sm:text-2xl lg:3xl no-scroll max-h-30 overflow-y-auto">{userData.bio}</p>
                 </div>
               </div>
             </div>

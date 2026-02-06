@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { addParticipant, cancelParticipant, createEvent, getEventById, getEvents, getEventsByClubId, getParticipants } from "../controllers/event.controller.js";
+import { addParticipant, cancelParticipant, changeEventCoverImage, createEvent, getEventById, getEvents, getEventsByClubId, getParticipants } from "../controllers/event.controller.js";
 import { authMiddleware } from "../middleware/auth.middelware.js";
 
 
@@ -12,7 +12,7 @@ eventRouter.get('/get-event/:eventId', getEventById);
 
 eventRouter.patch('/add-participant', authMiddleware, addParticipant);
 eventRouter.delete('/cancel-participant', authMiddleware, cancelParticipant);
-
+eventRouter.patch('/change-cover', authMiddleware, changeEventCoverImage)
 eventRouter.post('/get-participants', authMiddleware, getParticipants);
 
 export default eventRouter;

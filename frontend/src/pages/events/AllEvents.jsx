@@ -88,12 +88,12 @@ const AllEvent = () => {
               <h2 className="text-2xl font-bold text-gray-900">
                 All
                 <span className="text-gray-500 text-lg ml-2">
-                  12
+                  {events.length}
                 </span>
               </h2>
             </div>
             <div className="text-gray-600">
-              Showing 12 events
+              Showing {events.length} events
             </div>
           </div>
 

@@ -4,14 +4,22 @@ import ClubDetails from "../../components/club/ClubDetails";
 import { useClubById } from "../../store/useClub";
 import { useEffect } from "react";
 import CirclesLoader from "../../components/loaders/CirclesLoader";
-import Error from "../../components/loaders/Error";
+import { FaCamera } from "react-icons/fa";
+import { useState } from "react";
+import ImageUpload from '../../components/home/ImageUpload';
+import { useAuth } from "../../store/useAuth";
+
 
 const Club = () => {
   const { clubId } = useParams();
   const location = useLocation();
 
-  const { getClubById, loading, error, clubData } = useClubById();
-  // const clubData = {...club}
+  const {user} = useAuth();
+  const [upload, setUpload] = useState(false);
+
+  const { getClubById, loading, clubData, changeClubCoverImage } = useClubById();
+
+  const admin = user && clubData?.coordinator.some((member) => member.userId === user._id);
   useEffect(() => {
     getClubById(clubId);
   }, [clubId]);
@@ -19,21 +27,27 @@ const Club = () => {
   if (loading) return <CirclesLoader />;
   if (Object.keys(clubData).length == 0) return <CirclesLoader />;
   return (
-    <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
+    <div className="bg-linear-to-b min-h-screen from-gray-50 to-white">
       {/* Hero Section with Cover Image */}
-      {error && <Error error={error} />}
-      <div className="relative">
-        <div className="h-64 md:h-80 overflow-hidden">
+      {upload && <ImageUpload set={setUpload} onUpload={changeClubCoverImage} />}
+      <div className="relative h-120">
+        {/* Image Wrapper */}
+        <div className="h-full relative">
+          {admin && <button onClick={() => setUpload(true)} className="absolute z-10 right-3 top-3 bg-blue-500 p-3 text-white rounded-full"><FaCamera className="h-5 w-5" /></button>}
           <img
             src={clubData.coverImage}
             alt="Club Cover"
             className="w-full h-full object-cover"
           />
-          <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent"></div>
+
+          {/* Gradient Overlay */}
+          <div className="absolute inset-0 bg-linear-to-t from-black/70 to-transparent"></div>
         </div>
 
         {/* Club Basic Info */}
-        <BasicInfo clubData={clubData} />
+        <div className="absolute bottom-4 left-4 right-4 z-10">
+          <BasicInfo clubData={clubData} admin={admin} />
+        </div>
       </div>
 
       {/* Main Content */}

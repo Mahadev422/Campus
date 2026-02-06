@@ -9,7 +9,7 @@ import { useGetEventById } from "../../store/useEvent";
 import { useHelper } from "../../store/useHelper";
 import { useAuth } from "../../store/useAuth";
 import ButtonLoader from '../../components/loaders/ButtonLoader';
-
+import ReactMarkdown from 'react-markdown';
 
 const EventBasicInfo = () => {
   const { event, loading, addParticipant, addParticipantLoader, cancelParticipant } = useGetEventById();
@@ -37,11 +37,10 @@ const EventBasicInfo = () => {
             <h1 className="text-4xl font-serif md:text-5xl font-bold text-gray-900 mb-4">
               {event.title}
             </h1>
-
             <p className="text-xl text-gray-600 mb-8">{event.tagline}</p>
 
             {/* Quick Info Grid */}
-            <div className="grid grid-cols-2 xl:grid-cols-4 gap-4">
+            <div className="grid grid-cols-2 gap-4">
               <div className="bg-gray-200 p-3 rounded-md">
                 <h1 className="font-bold font-serif">Starting</h1>
                 <div className="flex items-center space-x-4">
@@ -94,6 +93,7 @@ const EventBasicInfo = () => {
                   </div>
                 </div>
               </div>
+
               <div className="flex items-center space-x-4">
                 <div className="p-2 bg-green-100 rounded-xl">
                   <HiOutlineLocationMarker className="w-7 h-7 text-green-600" />
@@ -114,7 +114,7 @@ const EventBasicInfo = () => {
                   <div className="text-gray-500">Capacity</div>
                   <div className="font-bold text-gray-900">
                     {event.participants.length}
-                    {event.seats == -1 ? "" : `/${event.seats}`}
+                    {event.seats == -1 || !event.seats ? "" : `/${event.seats}`}
                   </div>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 import RequestMenu from "./RequestMenu";
 
 const RequestMember = ({member, admin}) => {
-  console.log(admin);
+  
   return (
     <div
       key={member._id}

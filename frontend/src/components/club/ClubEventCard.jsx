@@ -1,23 +1,23 @@
 import { FaCalendarAlt, FaClock, FaTag } from "react-icons/fa";
 import { useHelper } from "../../store/useHelper";
+import { Link } from "react-router-dom";
 
 const ClubEventCard = ({ event }) => {
   const { formatDate } = useHelper();
   
   return (
     <div
-      key={event._id}
       className="flex flex-col gap-4 rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md"
     >
       {/* Header */}
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-lg font-semibold text-gray-900">{event.title}</h1>
+          <Link to={`/events/${event._id}`} className="text-lg font-semibold hover:text-blue-700 hover:underline text-gray-900">{event.title}</Link>
+          <br />
           <p className="mt-1 inline-block rounded-full bg-blue-100 px-3 py-0.5 text-xs font-medium text-blue-700">
             {event.status}
           </p>
           <span>
-            <p>{event.participantsCiunt}</p>
             <span>
               <p>Seats</p>
               <p>{event.participantsCount} {event.seats == -1 ? '' : `/${event.seats}`}</p>

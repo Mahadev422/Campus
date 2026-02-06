@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-
+import { Toaster } from 'react-hot-toast';
 // local
 import Header from "../components/home/Header";
 import { useEffect } from "react";
@@ -11,6 +11,7 @@ function App() {
 
   useEffect(() => {
     checkLogin();
+    
   }, [0]);
   
   if (userLoader) return <WebLoader />;
@@ -20,6 +21,7 @@ function App() {
         <Header />
       </div>
       <main className="no-scroll">
+        <Toaster position="top-right" reverseOrder={false} />
         <Outlet />
       </main>
     </>

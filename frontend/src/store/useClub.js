@@ -1,5 +1,5 @@
 import { create } from "zustand";
-
+import toast from 'react-hot-toast';
 const url = import.meta.env.VITE_BACKEND;
 
 export const useClub = create((set, get) => ({
@@ -49,7 +49,7 @@ export const useClubById = create((set, get) => ({
       set({ error: err.message });
     } finally {
       set({ loading: false });
-      setTimeout(() => set({error: null}), 2000)
+      setTimeout(() => set({ error: null }), 2000);
     }
   },
 
@@ -66,7 +66,7 @@ export const useClubById = create((set, get) => ({
         credentials: "include",
       });
       const resData = await res.json();
-      
+
       if (!resData.ok) set({ clubEventsError: resData.msg });
       else {
         set({
@@ -78,7 +78,7 @@ export const useClubById = create((set, get) => ({
       console.log(err.message);
     } finally {
       set({ clubEventsLoading: false });
-      setTimeout(() => set({clubEventsError: null}), 2000)
+      setTimeout(() => set({ clubEventsError: null }), 2000);
     }
   },
 
@@ -98,16 +98,73 @@ export const useClubById = create((set, get) => ({
       const resData = await res.json();
 
       if (!resData.ok) {
-        set({ error: resData.msg });
+        toast.error(resData.msg);
       } else {
-        set({ error: null, clubData: resData.msg });
+        set({ clubData: resData.msg });
+        toast.success('Joined Successfully.')
       }
     } catch (err) {
-      console.log(err.message);
-      set({ error: err.message });
+      toast.error(err.message);
     } finally {
       set({ joinLoading: false });
-      setTimeout(() => set({error: null}), 2000);
+    }
+  },
+
+  changeClubCoverImage: async (image, close) => {
+    const clubId = get().clubData._id;
+    if(!image || !clubId) return;
+    try {
+      const res = await fetch(`${url}/club/change-cover`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ image, clubId }),
+      });
+
+      const resData = await res.json();
+      
+      if (!resData.ok) {
+        toast.error(resData.msg);
+      } else {
+        set({ clubData: resData.msg });
+        close(false);
+        toast.success("Updated successfully.");
+      }
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      set({ imageLoader: false });
+    }
+  },
+
+  changeClubLogo: async (image, close) => {
+    const clubId = get().clubData._id;
+    if(!image || !clubId) return;
+    try {
+      const res = await fetch(`${url}/club/change-logo`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ image, clubId }),
+      });
+
+      const resData = await res.json();
+      
+      if (!resData.ok) {
+        toast.error(resData.msg);
+      } else {
+        set({ clubData: resData.msg });
+        close(false);
+        toast.success("Updated successfully.");
+      }
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      set({ imageLoader: false });
     }
   },
 }));
@@ -118,7 +175,7 @@ export const useClubMembers = create((set) => ({
   requests: [],
 
   getRequestForJoin: async (clubId) => {
-    set({loading: true});
+    set({ loading: true });
     try {
       const res = await fetch(`${url}/club/member-requests`, {
         method: "POST",
@@ -129,14 +186,14 @@ export const useClubMembers = create((set) => ({
         body: JSON.stringify({ clubId }),
       });
       const resData = await res.json();
-      if(!resData.ok) set({error: resData.msg});
-      else set({requests: [...resData.msg]});
+      if (!resData.ok) set({ error: resData.msg });
+      else set({ requests: [...resData.msg] });
     } catch (err) {
       console.log(err.message);
-      set({error: err.message})
+      set({ error: err.message });
     } finally {
-      set({loading: false});
-      setTimeout(() => set({error: null}), 2000)
+      set({ loading: false });
+      setTimeout(() => set({ error: null }), 2000);
     }
   },
 }));

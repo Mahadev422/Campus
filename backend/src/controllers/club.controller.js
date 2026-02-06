@@ -124,3 +124,65 @@ export const getRequestForJoin = async (req, res) => {
     });
   }
 };
+
+export const changeClubCoverImage = async (req, res) => {
+  if (!req.body || !req.body.image || !req.body.clubId) {
+    return res.status(400).json({ ok: false, msg: "Data requred." });
+  }
+
+  const { image, clubId } = req.body;
+  const userId = req.userId;
+  try {
+    const club = await Club.findOneAndUpdate(
+      {
+        _id: clubId,
+        "coordinator.userId": userId,
+      },
+      {
+        $set: { coverImage: image },
+      },
+      { new: true },
+    );
+
+    if (!club) {
+      return res
+        .status(404)
+        .json({ ok: false, msg: "Event not found that you created" });
+    }
+    res.status(201).json({ ok: true, msg: club });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ ok: false, msg: err.message });
+  }
+};
+
+export const changeClubLogo = async (req, res) => {
+  if (!req.body || !req.body.image || !req.body.clubId) {
+    return res.status(400).json({ ok: false, msg: "Data requred." });
+  }
+
+  const { image, clubId } = req.body;
+  const userId = req.userId;
+  try {
+    const club = await Club.findOneAndUpdate(
+      {
+        _id: clubId,
+        "coordinator.userId": userId,
+      },
+      {
+        $set: { logo: image },
+      },
+      { new: true },
+    );
+
+    if (!club) {
+      return res
+        .status(404)
+        .json({ ok: false, msg: "Event not found that you created" });
+    }
+    res.status(201).json({ ok: true, msg: club });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).json({ ok: false, msg: err.message });
+  }
+};

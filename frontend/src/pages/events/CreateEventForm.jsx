@@ -3,7 +3,7 @@ import { useCreateEvent } from "../../store/useEvent";
 import { useHelper } from "../../store/useHelper";
 
 const CreateEventForm = () => {
-  const { handleCreateEvent } = useCreateEvent();
+  const { handleCreateEvent, loading } = useCreateEvent();
   const { eventTypes } = useHelper();
   const {clubId} = useParams();
   const desc = `The Annual Tech Summit 2024 brings together the brightest minds in technology to discuss and showcase groundbreaking innovations in artificial intelligence.`;
@@ -59,6 +59,7 @@ const CreateEventForm = () => {
                 type="text"
                 name="title"
                 id="title"
+                required
                 placeholder="e.g.- Tech Summit 2024"
                 className={`w-full rounded-xl border border-gray-300 px-4 py-3.5 text-gray-900
                 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none
@@ -72,7 +73,7 @@ const CreateEventForm = () => {
                 required
                 name="eventType"
                 id="eventType"
-                className={`w-full rounded-xl border border-gray-300 px-4 py-3.5 text-gray-900
+                className={`w-full capitalize rounded-xl border border-gray-300 px-4 py-3.5 text-gray-900
                 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none
                 transition-all duration-200 bg-white
                 placeholder:text-gray-400 hover:border-gray-400`}
@@ -119,6 +120,7 @@ const CreateEventForm = () => {
               type="text"
               id="venue"
               name="venue"
+              required
               placeholder="e.g.- NLHC Computer Lab-1"
               className={`w-full rounded-xl border border-gray-300 px-4 py-3.5 text-gray-900
                 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none
@@ -145,6 +147,7 @@ const CreateEventForm = () => {
                     type="date"
                     id="fromDate"
                     name="fromDate"
+                    required
                     className={`w-full rounded-xl border border-gray-300 px-4 py-3.5 text-gray-900
                 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none
                 transition-all duration-200 bg-white
@@ -157,6 +160,7 @@ const CreateEventForm = () => {
                     type="time"
                     id="fromTime"
                     name="fromTime"
+                    required
                     placeholder="eg. 09:30 AM"
                     className={`w-full rounded-xl border border-gray-300 px-4 py-3.5 text-gray-900
                 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none
@@ -175,6 +179,7 @@ const CreateEventForm = () => {
                     type="date"
                     id="toDate"
                     name="toDate"
+                    required
                     className={`w-full rounded-xl border border-gray-300 px-4 py-3.5 text-gray-900
                 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none
                 transition-all duration-200 bg-white
@@ -187,6 +192,7 @@ const CreateEventForm = () => {
                     type="time"
                     id="toTime"
                     name="toTime"
+                    required
                     placeholder="eg. 09:30 PM"
                     className={`w-full rounded-xl border border-gray-300 px-4 py-3.5 text-gray-900
                 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-100 outline-none

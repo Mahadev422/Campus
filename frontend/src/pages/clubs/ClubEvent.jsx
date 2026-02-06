@@ -23,7 +23,7 @@ const ClubEvent = () => {
 
   return (
     <div>
-      <div className="flex gap-4 justify-between mb-2">
+      <div className="flex gap-4 justify-between mb-5">
         <h1 className="font-bold text-3xl py-1 px-2">Events</h1>
         {admin &&
           (create ? (
@@ -52,8 +52,11 @@ const ClubEvent = () => {
         ) : clubEvents.length === 0 ? (
           <p>No event created by this club</p>
         ) : (
-          clubEvents.map((event) => (<ClubEventCard key={event._id} event={event} />
-          ))
+          <div className="grid gap-4">
+            {clubEvents.map((event) => (
+              <ClubEventCard key={event._id} event={event} />
+            ))}
+          </div>
         )
       ) : (
         <CreateEventForm />

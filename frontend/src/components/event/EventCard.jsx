@@ -36,7 +36,7 @@ const EventCard = ({ event }) => {
       <div className="relative h-48 overflow-hidden">
         <Link to={`${event._id}`}>
           <img
-            src={event.logo}
+            src={event.coverImage}
             alt={event.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           />
