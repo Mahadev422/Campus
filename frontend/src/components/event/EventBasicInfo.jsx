@@ -9,7 +9,6 @@ import { useGetEventById } from "../../store/useEvent";
 import { useHelper } from "../../store/useHelper";
 import { useAuth } from "../../store/useAuth";
 import ButtonLoader from '../../components/loaders/ButtonLoader';
-import ReactMarkdown from 'react-markdown';
 
 const EventBasicInfo = () => {
   const { event, loading, addParticipant, addParticipantLoader, cancelParticipant } = useGetEventById();
