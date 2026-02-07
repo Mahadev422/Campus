@@ -1,4 +1,4 @@
-import { RefreshCw } from 'lucide-react';
+import { FiRefreshCw } from "react-icons/fi";
 import { useState } from 'react';
 
 const RefreshPage = () => {
@@ -23,7 +23,7 @@ const RefreshPage = () => {
         disabled={isRefreshing}
         className="group relative inline-flex items-center gap-2 px-10 py-5 bg-linear-to-r from-blue-600 to-blue-700 text-white text-lg font-semibold rounded-xl shadow-2xl hover:shadow-3xl hover:from-blue-700 hover:to-blue-800 transform hover:scale-110 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none"
       >
-        <RefreshCw 
+        <FiRefreshCw 
           size={24} 
           className={`transition-transform duration-500 ${isRefreshing ? 'animate-spin' : 'group-hover:rotate-180'}`} 
         />
