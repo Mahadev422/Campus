@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useClubById } from "../../store/useClub";
 import { MdAdminPanelSettings } from "react-icons/md";
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import Editor from "../../components/home/Editor";
 import { useAuth } from "../../store/useAuth";
 import { FiEdit } from "react-icons/fi";
