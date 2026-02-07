@@ -17,12 +17,11 @@ const AllEvent = () => {
   const { getEvents, events, loading } = useGetAllEvent();
 
   useEffect(() => {
-    if(events.length == 0) getEvents();
+    if(events.length === 0) getEvents();
   }, [0]);
 
 
   if(loading) return <p>Loading...</p>
-  // Filter and sort events
 
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">

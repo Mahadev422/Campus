@@ -142,3 +142,10 @@ export const useHelper = create((set, get) => ({
 }
 
 }));
+
+
+export const htmlToText = (html) => {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  return div.textContent || div.innerText || "";
+}

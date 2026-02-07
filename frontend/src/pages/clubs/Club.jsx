@@ -8,6 +8,7 @@ import { FaCamera } from "react-icons/fa";
 import { useState } from "react";
 import ImageUpload from '../../components/home/ImageUpload';
 import { useAuth } from "../../store/useAuth";
+import RefreshPage from '../../components/home/RefreshPage';
 
 
 const Club = () => {
@@ -19,13 +20,15 @@ const Club = () => {
 
   const { getClubById, loading, clubData, changeClubCoverImage } = useClubById();
 
-  const admin = user && clubData?.coordinator.some((member) => member.userId === user._id);
+  const admin = user && clubData?.coordinator?.some((member) => member.userId === user._id);
   useEffect(() => {
     getClubById(clubId);
   }, [clubId]);
 
   if (loading) return <CirclesLoader />;
-  if (Object.keys(clubData).length == 0) return <CirclesLoader />;
+
+  if (Object.keys(clubData).length === 0) return <RefreshPage />;
+  
   return (
     <div className="bg-linear-to-b min-h-screen from-gray-50 to-white">
       {/* Hero Section with Cover Image */}

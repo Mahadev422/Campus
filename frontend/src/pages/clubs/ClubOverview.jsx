@@ -1,24 +1,37 @@
 import { Link } from "react-router-dom";
-import ClubAchievement from "../../components/club/ClubAchievement";
 import { useClubById } from "../../store/useClub";
 import { MdAdminPanelSettings } from "react-icons/md";
+import { useState } from "react";
+import Editor from "../../components/home/Editor";
+import { useAuth } from "../../store/useAuth";
+import { FiEdit } from "react-icons/fi";
+
 
 const ClubOverview = () => {
-  const {clubData} = useClubById();
+  const {clubData, loading} = useClubById();
+  const {user} = useAuth();
 
-  if(Object.keys(clubData).length == 0) return <p>Loading...</p>
+  const [edit, setEdit] = useState(false);
+
+   const onSubmit = (text) => {
+    console.log(text);
+    
+  }
+
+  const admin = user && clubData?.coordinator?.some((member) => member.userId === user._id);
+
+  if(loading || Object.keys(clubData).length == 0) return <p>Loading...</p>
 
   return (
     <div className="space-y-8">
       {/* Club Description */}
+      
       <div className="bg-white rounded-2xl font-mono shadow-lg p-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          About the Club
+          About the Club {admin && <button className="cursor-pointer hover:bg-blue-200 p-1 rounded-full" onClick={() => setEdit(true)}><FiEdit size={22} color="#2563eb" /></button>}
         </h2>
-        <code className="text-gray-700 mb-6">{clubData.description}</code>
+        {edit ? <Editor onSubmit={onSubmit} initialContent={clubData.description} set={setEdit} /> : <p className="text-gray-700 mb-6">{clubData.description}</p>}
 
-        {/* Achievements */}
-        <ClubAchievement />
       </div>
 
       {/* Coordinators Section */}

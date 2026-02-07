@@ -23,9 +23,9 @@ const EventCard = ({ event }) => {
     };
     return (
       <span
-        className={`px-3 py-1 rounded-full text-xs font-semibold ${styles[status]}`}
+        className={`px-3 py-1 capitalize rounded-full text-xs font-semibold ${styles[status]}`}
       >
-        {status.charAt(0).toUpperCase() + status.slice(1)}
+        {status}
       </span>
     );
   };
@@ -34,7 +34,7 @@ const EventCard = ({ event }) => {
     <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden group">
       {/* Event Image */}
       <div className="relative h-48 overflow-hidden">
-        <Link to={`${event._id}`}>
+        <Link to={`/events/${event._id}`}>
           <img
             src={event.coverImage}
             alt={event.title}

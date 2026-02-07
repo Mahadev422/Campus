@@ -4,15 +4,13 @@ import { useClub } from "../../store/useClub";
 import ClubNotFound from "../../components/club/ClubNotFound";
 import ClubControl from "../../components/club/ClubControl";
 import CirclesLoader from "../../components/loaders/CirclesLoader";
+import RefreshPage from "../../components/home/RefreshPage";
 
 const AllClubs = () => {
-  const { getAllClubs, clubs } = useClub();
-  const [loading, setLoading] = useState(false);
+  const { getAllClubs, clubs, loading } = useClub();
   
   useEffect(() => {
-    setLoading(true);
     if(clubs.length === 0) getAllClubs();
-    setLoading(false);
   },[clubs]);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -46,7 +44,7 @@ const AllClubs = () => {
             </h2>
           </div>
 
-          {(loading || clubs.length == 0) ? <CirclesLoader /> : filteredClubs.length === 0 ? (
+          {loading ? <CirclesLoader /> : clubs.length === 0 ? <RefreshPage /> : filteredClubs.length === 0 ? (
             <ClubNotFound setFilterCategory={setFilterCategory} setSearchTerm={setSearchTerm} />
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

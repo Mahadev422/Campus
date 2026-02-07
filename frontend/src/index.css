@@ -6,3 +6,19 @@
 body::-webkit-scrollbar {
   display: none;
 }
+
+.ProseMirror {
+  outline: none;
+  min-height: 140px;
+}
+
+.ProseMirror p {
+  margin: 0.5rem 0;
+}
+
+.ProseMirror code {
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.875rem;
+}

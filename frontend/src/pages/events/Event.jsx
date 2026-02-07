@@ -1,15 +1,13 @@
 import { Link, Outlet, useParams } from "react-router-dom";
 
-import PersonCard from "../../components/event/PersonCard";
 import EventInfo from "../../components/event/EventInfo";
 import EventBasicInfo from "../../components/event/EventBasicInfo";
 import { useGetEventById } from "../../store/useEvent";
 import { useEffect, useState } from "react";
-import Error from '../../components/loaders/Error';
 import { FaCamera } from "react-icons/fa";
 import ImageUpload from "../../components/home/ImageUpload";
 import { useAuth } from "../../store/useAuth";
-
+import CirclesLoader from '../../components/loaders/CirclesLoader';
 // Main Event Detail Page
 const Event = () => {
   const { getEventById, loading, event, changeCoverImage } = useGetEventById();
@@ -21,7 +19,7 @@ const Event = () => {
     getEventById(eventId);
   },[eventId]);
 
-  if(loading) return <p>Loading...</p>
+  if(loading || Object.keys(event).length === 0) return <CirclesLoader />
   
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
@@ -29,7 +27,7 @@ const Event = () => {
       {upload && <ImageUpload set={setUpload} onUpload={changeCoverImage} />}
       <div className="relative">
         <div className="h-96 overflow-hidden relative">
-          {(user && user?._id === event?.createdBy.userId) && <button onClick={() => setUpload(true)} className="absolute cursor-pointer top-3 z-20 bg-blue-500 p-3 text-white rounded-full right-3"><FaCamera className="h-5 w-5" /></button>}
+          {(user && user?._id === event?.createdBy?.userId) && <button onClick={() => setUpload(true)} className="absolute cursor-pointer top-3 z-20 bg-blue-500 p-3 text-white rounded-full right-3"><FaCamera className="h-5 w-5" /></button>}
           <img
             src={event.coverImage || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&h=600&fit=crop'}
             alt="Event Cover"
