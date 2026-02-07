@@ -57,8 +57,8 @@ export const getMyDetails = async (req, res) => {
   const userId = req.userId;
   try {
     const user = await User.findById(userId)
-    .populate('clubsJoined', '_id clubName category logo')
-    .populate('eventsParticipated', '_id title venue to');
+      .populate("clubsJoined", "_id clubName category logo")
+      .populate("eventsParticipated", "_id title venue to");
     if (!user)
       return res.status(404).json({ ok: false, msg: "User not found" });
     res.status(200).json({ ok: true, msg: user });
@@ -67,22 +67,25 @@ export const getMyDetails = async (req, res) => {
   }
 };
 
-export const changeMyProfilePic =async (req, res) => {
+export const changeMyProfile = async (req, res) => {
   const userId = req.userId;
 
-  if(!req.body || !req.body.image) {
-    return res.status(400).json({ok: false, msg: 'Image is required'});
+  if (!req.body || !req.body.key || !req.body.value) {
+    return res.status(400).json({ ok: false, msg: "Image is required" });
   }
   try {
-    const {image} = req.body;
-    const user = await User.findByIdAndUpdate(userId, {profilePic: image}, {new: true});
+    const { key, value } = req.body;
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { $set: { [key]: value } },
+      { new: true },
+    );
     if (!user) {
       return res.status(404).json({ ok: false, msg: "User not found" });
     }
-    res.status(201).json({ok: true, msg: user});
+    res.status(201).json({ ok: true, msg: user });
   } catch (err) {
-    console.log(err.message)
-    res.status(500).json({ok: false, msg: err.message});
+    console.log(err.message);
+    res.status(500).json({ ok: false, msg: err.message });
   }
-  
-}
+};

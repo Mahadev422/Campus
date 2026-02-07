@@ -7,25 +7,11 @@ import { useAuth } from "../../store/useAuth";
 import { FiEdit } from "react-icons/fi";
 import ShowHtml from "../../components/home/ShowHtml";
 
-
-
-
 const ClubOverview = () => {
-  const { clubData, loading } = useClubById();
+  const { clubData, loading, changeClubDescription } = useClubById();
   const { user } = useAuth();
 
   const [edit, setEdit] = useState(false);
-  const [des, setDes] = useState(clubData.description);
-  const desRef = useRef();
-
-  // useEffect(() => {
-  //   desRef.current.innerHTML = des;
-  //   console.log(des);
-  // },[des]);
-  const onSubmit = (html) => {
-    setDes(html);
-    setEdit(false);
-  };
 
   const admin =
     user && clubData?.coordinator?.some((member) => member.userId === user._id);
@@ -49,8 +35,14 @@ const ClubOverview = () => {
           )}
         </h2>
         {edit ? (
-          <Editor onSubmit={onSubmit} initialValue={des} />
-        ) : (<ShowHtml htmlContent={des} />)}
+          <Editor
+            onSubmit={changeClubDescription}
+            set={setEdit}
+            initialValue={clubData.description}
+          />
+        ) : (
+          <ShowHtml htmlContent={clubData.description} />
+        )}
       </div>
 
       {/* Coordinators Section */}

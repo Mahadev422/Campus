@@ -142,3 +142,13 @@ export const useHelper = create((set, get) => ({
   },
 }));
 
+export const addFourYears = (iso) => {
+  const date = new Date(iso);
+  date.setFullYear(date.getFullYear() + 4);
+  const formatted = date.toLocaleDateString("en-IN", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  });
+  return formatted;
+};

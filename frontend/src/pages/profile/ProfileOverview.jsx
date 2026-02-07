@@ -1,61 +1,36 @@
-import { FaEdit } from "react-icons/fa";
+import { FiEdit } from "react-icons/fi";
 import StatsCard from "../../components/profile/StatsCard";
 import { useUser } from "../../store/useUser";
-import { useHelper } from "../../store/useHelper";
+import { useState } from "react";
+import Editor from '../../components/home/Editor';
+import ShowHtml from '../../components/home/ShowHtml';
 
 const ProfileOverview = () => {
-  const { userData } = useUser();
-  const { addFourYears } = useHelper();
+  const { userData, changeBio } = useUser();
+  const [edit, setEdit] = useState(false);
+
   return (
     <div className="space-y-3">
       {/* Academic Information */}
-      <div className="bg-white rounded-2xl shadow-lg p-8">
-        <div className="flex justify-between items-center pb-4">
-          <h2 className="text-2xl font-bold text-gray-900">
-            Academic Information
-          </h2>
-        </div>
-        <div className="grid gap-4">
-          <div className="space-y-3">
-            <div className="flex flex-row gap-3">
-              <div className="text-gray-500">College :</div>
-              <div className="font-bold text-gray-900">IIT-ISM Dhanbad</div>
-            </div>
-            <div className="flex flex-row gap-3">
-              <div className="text-sm text-gray-500">Degree :</div>
-              <div className="font-bold text-gray-900">
-                {userData.academic?.degree}
-              </div>
-            </div>
-            <div className="flex flex-row gap-3">
-              <div className="text-sm text-gray-500">Department :</div>
-              <div className="font-bold text-gray-900">
-                {userData.academic?.department}
-              </div>
-            </div>
-          </div>
-          <hr />
-          <div>
-            <div className="flex flex-row gap-3">
-              <div className="text-sm text-gray-500">Semester :</div>
-              <div className="font-bold text-gray-900">
-                {userData.academic?.semester}
-              </div>
-            </div>
-            <div className="flex flex-row gap-3">
-              <div className="text-sm text-gray-500">CGPA :</div>
-              <div className="font-bold text-gray-900">
-                {userData.academic?.cgpa.$numberDecimal}
-              </div>
-            </div>
-            <div className="flex flex-row gap-3">
-              <div className="text-sm text-gray-500">Expected Graduation :</div>
-              <div className="font-bold text-gray-900">
-                {addFourYears(userData?.createdAt)}
-              </div>
-            </div>
-          </div>
-        </div>
+      <div className="bg-white rounded-2xl font-mono shadow-lg p-6 md:p-8">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          About
+            <button
+              className="cursor-pointer hover:bg-blue-200 p-1 rounded-full"
+              onClick={() => setEdit(true)}
+            >
+              <FiEdit size={22} color="#2563eb" />
+            </button>
+        </h2>
+        {edit ? (
+          <Editor
+            onSubmit={changeBio}
+            set={setEdit}
+            initialValue={userData.bio}
+          />
+        ) : (
+          <ShowHtml htmlContent={userData.bio} />
+        )}
       </div>
 
       {/* Skills & Interests */}

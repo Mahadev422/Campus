@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import toast from 'react-hot-toast';
+import toast from "react-hot-toast";
 const url = import.meta.env.VITE_BACKEND;
 
 export const useClub = create((set, get) => ({
@@ -101,7 +101,7 @@ export const useClubById = create((set, get) => ({
         toast.error(resData.msg);
       } else {
         set({ clubData: resData.msg });
-        toast.success('Joined Successfully.')
+        toast.success("Joined Successfully.");
       }
     } catch (err) {
       toast.error(err.message);
@@ -110,46 +110,31 @@ export const useClubById = create((set, get) => ({
     }
   },
 
-  changeClubCoverImage: async (image, close) => {
+  changeClubCoverImage: (image, close) => {
     const clubId = get().clubData._id;
-    if(!image || !clubId) return;
-    try {
-      const res = await fetch(`${url}/club/change-cover`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ image, clubId }),
-      });
-
-      const resData = await res.json();
-      
-      if (!resData.ok) {
-        toast.error(resData.msg);
-      } else {
-        set({ clubData: resData.msg });
-        close(false);
-        toast.success("Updated successfully.");
-      }
-    } catch (err) {
-      toast.error(err.message);
-    } finally {
-      set({ imageLoader: false });
-    }
+    get().changeClub('coverImage', image, clubId, close);
   },
 
-  changeClubLogo: async (image, close) => {
+  changeClubLogo: (image, close) => {
     const clubId = get().clubData._id;
-    if(!image || !clubId) return;
+    get().changeClub('logo', image, clubId, close);
+  },
+
+  changeClubDescription: (text, close) => {
+    const clubId = get().clubData._id;
+    get().changeClub('description', text, clubId, close);
+  },
+
+  changeClub: async (key, value, clubId, close) => {
+    if (!value || !key || !clubId) return;
     try {
-      const res = await fetch(`${url}/club/change-logo`, {
+      const res = await fetch(`${url}/club/update`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ image, clubId }),
+        body: JSON.stringify({ key, value, clubId }),
       });
 
       const resData = await res.json();

@@ -34,10 +34,9 @@ const Me = () => {
     getMyData();
   }, [0]);
 
-
   if (loading || userLoader) return <CirclesLoader />;
   if (!user) return <Navigate to="/login" />;
-  
+
   return (
     <div className="min-h-screen bg-linear-to-b from-gray-50 to-white">
       {/* Profile Cover Section */}
@@ -46,6 +45,46 @@ const Me = () => {
       {/* Main Content */}
       <div className="px-6 py-12">
         <div className="flex flex-col lg:flex-row gap-8">
+          {/* Right Column - Main Content */}
+          <div className="lg:w-3/4">
+            {/* Navigation Tabs */}
+            <div className="bg-white rounded-md shadow-md mb-8 overflow-hidden">
+              <div className="flex justify-around no-scroll overflow-x-auto">
+                {[
+                  { link: "", label: "Overview", icon: HiOutlineUser },
+                  { link: "clubs", label: "Clubs", icon: HiOutlineUserGroup },
+                  { link: "events", label: "Events", icon: HiOutlineCalendar },
+                  {
+                    link: "achievements",
+                    label: "Achievements",
+                    icon: FaTrophy,
+                  },
+                  {
+                    link: "settings",
+                    label: "Settings",
+                    icon: IoMdSettings,
+                  },
+                ].map((tab, i) => {
+                  const Icon = tab.icon;
+                  return (
+                    <Link
+                      to={`${tab.link}`}
+                      key={i}
+                      className={`flex items-center space-x-2 px-6 py-4 font-semibold whitespace-nowrap transition-colors 
+                          text-gray-600 hover:text-blue-600 hover:bg-gray-50
+                      `}
+                    >
+                      <Icon className="w-5 h-5" />
+                      <span>{tab.label}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Tab Content */}
+            <Outlet />
+          </div>
           {/* Left Column - Stats & Info */}
           <div className="lg:w-1/4 space-y-6">
             {/* Contact Information */}
@@ -115,47 +154,6 @@ const Me = () => {
                 </div>
               </div>
             </div>
-          </div>
-
-          {/* Right Column - Main Content */}
-          <div className="lg:w-3/4">
-            {/* Navigation Tabs */}
-            <div className="bg-white rounded-md shadow-md mb-8 overflow-hidden">
-              <div className="flex justify-around no-scroll overflow-x-auto">
-                {[
-                  { link: "", label: "Overview", icon: HiOutlineUser },
-                  { link: "clubs", label: "Clubs", icon: HiOutlineUserGroup },
-                  { link: "events", label: "Events", icon: HiOutlineCalendar },
-                  {
-                    link: "achievements",
-                    label: "Achievements",
-                    icon: FaTrophy,
-                  },
-                  {
-                    link: "settings",
-                    label: "Settings",
-                    icon: IoMdSettings,
-                  },
-                ].map((tab, i) => {
-                  const Icon = tab.icon;
-                  return (
-                    <Link
-                      to={`${tab.link}`}
-                      key={i}
-                      className={`flex items-center space-x-2 px-6 py-4 font-semibold whitespace-nowrap transition-colors 
-                          text-gray-600 hover:text-blue-600 hover:bg-gray-50
-                      `}
-                    >
-                      <Icon className="w-5 h-5" />
-                      <span>{tab.label}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-            </div>
-
-            {/* Tab Content */}
-            <Outlet />
           </div>
         </div>
       </div>

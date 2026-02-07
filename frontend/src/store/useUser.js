@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { create } from "zustand";
 
 const url = import.meta.env.VITE_BACKEND;
@@ -24,33 +25,40 @@ export const useUser = create((set, get) => ({
   },
 
   error: null,
+  changeCoverImage: (image, close) => {
+    get().changeProfile("coverImage", image, close);
+  },
 
-  changeProfilePic: async (image, close) => {
-    console.log(image);
-    if(!image) return;
+  changeProfilePic: (image, close) => {
+    get().changeProfile("profilePic", image, close);
+  },
+
+  changeBio: (text, close) => {
+    get().changeProfile('bio', text, close);
+  },
+  changeProfile: async (key, value, close) => {
+    if (!key || !value) return;
+
     try {
-      const res = await fetch(`${url}/user/change-profile`, {
-        method: 'PATCH',
+      const res = await fetch(`${url}/user/change`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ image }),
+        body: JSON.stringify({ key, value }),
       });
 
       const resData = await res.json();
-      console.log(resData);
-      if(!resData.ok) {
-        set({error: resData.msg});
-      }
-      else {
-        set({userData: resData.msg});
+      if (!resData.ok) {
+        toast.error(resData.msg);
+      } else {
+        set({ userData: resData.msg });
+        toast.success("Updated Successfully.");
         close(false);
       }
     } catch (err) {
-      console.log(err.message);
-    } finally {
-      setTimeout(() => set({error: null}), 2000); 
+      toast.error(err.message);
     }
-  }
+  },
 }));

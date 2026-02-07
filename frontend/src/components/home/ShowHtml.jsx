@@ -3,7 +3,7 @@ export default function ShowHtml({ htmlContent, className = "" }) {
     <div className={`rich-text-content bg-gray-100 p-4 rounded-xl`}>
       <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
 
-      <style jsx>{`
+      <style>{`
         .rich-text-content {
           line-height: 1.6;
         }

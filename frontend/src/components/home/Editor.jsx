@@ -10,9 +10,10 @@ import {
   FaRedo,
   FaLink,
   FaUnlink,
+  FaWindowClose,
 } from "react-icons/fa";
 
-const RichTextEditor = ({ initialValue = "", onSubmit }) => {
+const RichTextEditor = ({ initialValue = "", onSubmit, set }) => {
   const editorRef = useRef(null);
   const savedRange = useRef(null);
 
@@ -85,29 +86,35 @@ const RichTextEditor = ({ initialValue = "", onSubmit }) => {
   ];
 
   return (
-    <div className="max-w-4xl mx-auto bg-white border rounded-lg shadow">
+    <div className="max-w-4xl mx-auto bg-white border overflow-hidden rounded-lg shadow">
       {/* Toolbar */}
-      <div className="flex flex-wrap gap-1 p-2 border-b bg-gray-100">
-        {buttons.map((b, i) => (
-          <button
-            key={i}
-            type="button"
-            onClick={b.action}
-            className="p-2 rounded hover:bg-gray-200"
-          >
-            <b.icon size={16} />
-          </button>
-        ))}
+      <div className="flex justify-between p-2 border-b bg-gray-100">
+        <div className="flex flex-wrap">
+          {buttons.map((b, i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={b.action}
+              className="p-2 rounded hover:bg-gray-200"
+            >
+              <b.icon size={16} />
+            </button>
+          ))}
 
-        <select
-          className="ml-2 border rounded px-2"
-          onChange={(e) => exec("formatBlock", e.target.value)}
-        >
-          <option value="p">Paragraph</option>
-          <option value="h1">H1</option>
-          <option value="h2">H2</option>
-          <option value="h3">H3</option>
-        </select>
+          <select
+            className="ml-2 border rounded px-2"
+            onChange={(e) => exec("formatBlock", e.target.value)}
+          >
+            <option value="p">Paragraph</option>
+            <option value="h1">H1</option>
+            <option value="h2">H2</option>
+            <option value="h3">H3</option>
+          </select>
+        </div>
+
+        <button onClick={() => set(false)}>
+          <FaWindowClose className="w-5 h-5" />
+        </button>
       </div>
 
       {/* Editor */}
@@ -124,7 +131,7 @@ const RichTextEditor = ({ initialValue = "", onSubmit }) => {
           {html.replace(/<[^>]*>/g, "").length} characters
         </span>
         <button
-          onClick={() => onSubmit?.(html)}
+          onClick={() => onSubmit(html, set)}
           className="px-4 py-2 bg-black text-white rounded"
         >
           Submit

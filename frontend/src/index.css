@@ -6,7 +6,7 @@
 body::-webkit-scrollbar {
   display: none;
 }
-
+/* 
 .ProseMirror {
   outline: none;
   min-height: 140px;
@@ -31,4 +31,4 @@ body::-webkit-scrollbar {
 .ProseMirror ol {
   list-style-type: decimal;
   padding-left: 1.5rem;
-}
+} */
