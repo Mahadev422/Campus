@@ -27,26 +27,26 @@ const BasicDetails = () => {
         <div className="bg-white rounded-3xl shadow-2xl p-8">
           <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
             {/* Profile Picture and Basic Info */}
-            <div className="flex items-start justify-evenly space-x-4">
+            <div className="flex items-start justify-center space-x-4">
               <div className="relative flex-1 w-full">
                 <img
                   src={userData.profilePic}
                   alt={userData.name}
-                  className="w-screen rounded-2xl object-cover border-8 border-white shadow-2xl"
+                  className="h-full rounded-2xl object-cover border-8 border-white shadow-2xl"
                 />
-                <button onClick={() => setUpload(true)} className="absolute -bottom-3 -right-3 p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 shadow-lg">
-                  <FaCamera className="md:w-5 md:h-5 h-3 w-3" />
+                <button onClick={() => setUpload(true)} className="absolute -bottom-2 -left-2 p-3 bg-blue-600 text-white rounded-full hover:bg-blue-700 shadow-lg">
+                  <FaCamera className="w-5 h-5" />
                 </button>
               </div>
 
               <div className="flex-2">
-                <div className="pt-2 grid text-2xl">
+                <div className="pt-2 grid gap-4 text-2xl">
                   <div className="flex items-center space-x-3 mb-2">
                     <h1 className="text-2xl md:text-5xl font-bold font-serif text-gray-900">
                       {userData.name}
                     </h1>
                   </div>
-                  <p className="text-gray-700 font-mono text-xs mb-6 sm:text-2xl lg:3xl no-scroll max-h-30 overflow-y-auto">{userData.bio}</p>
+                  <p className="text-gray-700 font-mono text-xs mb-6 sm:text-2xl lg:3xl">{userData.bio}</p>
                 </div>
               </div>
             </div>

@@ -48,9 +48,11 @@ export const loginUser = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  res
-    .clearCookie("rft")
-    .json({ message: "Logged out" });
+  try {
+    res.clearCookie("rft").json({ ok: true, message: "Logout Successfully." });
+  } catch (err) {
+    res.status(500).json({ ok: false, msg: err.message });
+  }
 };
 
 export const checkLoggedIn = async (req, res) => {
@@ -58,7 +60,7 @@ export const checkLoggedIn = async (req, res) => {
   if (!userId)
     return res.status(400).json({ ok: false, msg: "Please login first." });
   try {
-    const user = await User.findById(userId).select('_id name');
+    const user = await User.findById(userId).select("_id name");
 
     if (!user)
       return res.status(404).json({ ok: false, msg: "User not found" });

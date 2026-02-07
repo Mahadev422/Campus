@@ -1,103 +1,184 @@
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
+import { useEffect, useRef, useState } from "react";
+import {
+  FaBold,
+  FaItalic,
+  FaUnderline,
+  FaListUl,
+  FaListOl,
+  FaCode,
+  FaUndo,
+  FaRedo,
+  FaLink,
+  FaUnlink,
+} from "react-icons/fa";
 
-function Toolbar({ editor, set }) {
-  if (!editor) return null;
+const RichTextEditor = ({ initialValue = "", onSubmit }) => {
+  const editorRef = useRef(null);
+  const savedRange = useRef(null);
 
-  const btn =
-    "px-2 py-1.5 text-sm rounded-md border border-gray-200 text-gray-700 hover:bg-gray-100 transition";
+  const [html, setHtml] = useState(initialValue);
+  const [showLink, setShowLink] = useState(false);
+  const [url, setUrl] = useState("");
 
-  return (
-    <div className="flex items-center justify-between border-b border-gray-200 pb-2 mb-3">
-      <div className="flex flex-wrap gap-1.5">
-        <button
-          className={btn}
-          onClick={() => editor.chain().focus().toggleBold().run()}
-        >
-          <strong>B</strong>
-        </button>
+  useEffect(() => {
+    if (editorRef.current && initialValue) {
+      editorRef.current.innerHTML = initialValue;
+    }
+  }, [initialValue]);
 
-        <button
-          className={btn}
-          onClick={() => editor.chain().focus().toggleItalic().run()}
-        >
-          <em>I</em>
-        </button>
-
-        <button
-          className={btn}
-          onClick={() => editor.chain().focus().toggleStrike().run()}
-        >
-          <span className="line-through">S</span>
-        </button>
-
-        <button
-          className={btn}
-          onClick={() => editor.chain().focus().toggleBulletList().run()}
-        >
-          • List
-        </button>
-
-        <button
-          className={btn}
-          onClick={() => editor.chain().focus().toggleOrderedList().run()}
-        >
-          1. List
-        </button>
-
-        <button
-          className={btn}
-          onClick={() => editor.chain().focus().toggleCodeBlock().run()}
-        >
-          Code
-        </button>
-      </div>
-
-      <button
-        onClick={() => set(false)}
-        className="text-gray-400 hover:text-gray-700 transition text-sm"
-        aria-label="Close editor"
-      >
-        ✕
-      </button>
-    </div>
-  );
-}
-
-export default function Editor({ onSubmit, initialContent = "", set }) {
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content: initialContent,
-  });
-
-  const handleSubmit = () => {
-    if (!editor) return;
-
-    onSubmit?.({
-      html: editor.getHTML(),
-      json: editor.getJSON(),
-      text: editor.getText(),
-    });
+  const exec = (cmd, value = null) => {
+    editorRef.current?.focus();
+    document.execCommand(cmd, false, value);
+    updateHtml();
   };
 
-  if (!editor) return null;
+  const updateHtml = () => {
+    setHtml(editorRef.current?.innerHTML || "");
+  };
+
+  const saveSelection = () => {
+    const sel = window.getSelection();
+    if (sel && sel.rangeCount > 0) {
+      savedRange.current = sel.getRangeAt(0);
+    }
+  };
+
+  const restoreSelection = () => {
+    const sel = window.getSelection();
+    if (savedRange.current && sel) {
+      sel.removeAllRanges();
+      sel.addRange(savedRange.current);
+    }
+  };
+
+  const insertLink = () => {
+    if (!url) return;
+
+    restoreSelection();
+    exec(
+      "insertHTML",
+      `<a href="${url.startsWith("http") ? url : `https://${url}`}"
+         target="_blank" rel="noopener noreferrer">${url}</a>`,
+    );
+
+    setShowLink(false);
+    setUrl("");
+  };
+
+  const buttons = [
+    { icon: FaBold, action: () => exec("bold") },
+    { icon: FaItalic, action: () => exec("italic") },
+    { icon: FaUnderline, action: () => exec("underline") },
+    { icon: FaListUl, action: () => exec("insertUnorderedList") },
+    { icon: FaListOl, action: () => exec("insertOrderedList") },
+    { icon: FaCode, action: () => exec("formatBlock", "pre") },
+    {
+      icon: FaLink,
+      action: () => {
+        saveSelection();
+        setShowLink(true);
+      },
+    },
+    { icon: FaUnlink, action: () => exec("unlink") },
+    { icon: FaUndo, action: () => exec("undo") },
+    { icon: FaRedo, action: () => exec("redo") },
+  ];
 
   return (
-    <div className="w-full max-w-3xl bg-white border border-gray-200 rounded-xl shadow-sm p-4">
-      <Toolbar editor={editor} set={set} />
+    <div className="max-w-4xl mx-auto bg-white border rounded-lg shadow">
+      {/* Toolbar */}
+      <div className="flex flex-wrap gap-1 p-2 border-b bg-gray-100">
+        {buttons.map((b, i) => (
+          <button
+            key={i}
+            type="button"
+            onClick={b.action}
+            className="p-2 rounded hover:bg-gray-200"
+          >
+            <b.icon size={16} />
+          </button>
+        ))}
 
-      <div className="prose max-w-none min-h-40 text-gray-800">
-        <EditorContent editor={editor} />
+        <select
+          className="ml-2 border rounded px-2"
+          onChange={(e) => exec("formatBlock", e.target.value)}
+        >
+          <option value="p">Paragraph</option>
+          <option value="h1">H1</option>
+          <option value="h2">H2</option>
+          <option value="h3">H3</option>
+        </select>
       </div>
 
-      <div className="flex justify-end mt-4 pt-3 border-t border-gray-100">
+      {/* Editor */}
+      <div
+        ref={editorRef}
+        contentEditable
+        onInput={updateHtml}
+        className="min-h-55 p-4 outline-none prose max-w-none"
+      />
+
+      {/* Footer */}
+      <div className="flex justify-between items-center p-3 border-t bg-gray-50">
+        <span className="text-sm text-gray-500">
+          {html.replace(/<[^>]*>/g, "").length} characters
+        </span>
         <button
-          onClick={handleSubmit}
-          className="px-5 py-2 text-sm font-medium bg-black text-white rounded-md hover:opacity-90 transition"
+          onClick={() => onSubmit?.(html)}
+          className="px-4 py-2 bg-black text-white rounded"
         >
           Submit
         </button>
       </div>
+
+      {/* Link Modal */}
+      {showLink && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center">
+          <div className="bg-white p-5 rounded w-[320px]">
+            <h3 className="font-semibold mb-3">Insert Link</h3>
+            <input
+              value={url}
+              onChange={(e) => setUrl(e.target.value)}
+              placeholder="https://example.com"
+              className="w-full border px-3 py-2 rounded mb-3"
+            />
+            <div className="flex gap-2">
+              <button
+                onClick={insertLink}
+                className="flex-1 bg-blue-600 text-white py-2 rounded"
+              >
+                Insert
+              </button>
+              <button
+                onClick={() => setShowLink(false)}
+                className="flex-1 bg-gray-200 py-2 rounded"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Content Styles */}
+      <style>
+        {`
+          .prose ul { list-style: disc; padding-left: 1.5rem; }
+          .prose ol { list-style: decimal; padding-left: 1.5rem; }
+          .prose pre {
+            background:#f5f5f5;
+            padding:1rem;
+            border-radius:6px;
+            overflow:auto;
+          }
+          .prose a {
+            color:#2563eb;
+            text-decoration:underline;
+          }
+        `}
+      </style>
     </div>
   );
-}
+};
+
+export default RichTextEditor;

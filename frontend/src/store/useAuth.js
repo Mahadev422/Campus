@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import toast from "react-hot-toast";
 
 const url = import.meta.env.VITE_BACKEND;
 
@@ -24,38 +25,17 @@ export const useLogin = create((set, get) => ({
       const resData = await res.json();
       console.log(resData);
       if (!resData.ok) {
-        set({ error: resData.msg });
+        toast.error(resData.msg);
       } else {
-        set({ error: null });
         e.target.reset();
+        toast.success("Login successfully.");
         window.location.href = "/";
       }
     } catch (err) {
       console.log(err.message);
-      set({ error: err.message });
+      toast.error(err.message);
     } finally {
       set({ isLoading: false });
-    }
-  },
-}));
-
-export const useLogout = create((set) => ({
-  loading: false,
-  error: null,
-
-  handleLogout: async () => {
-    set({ loading: true });
-    try {
-      const res = await fetch(`${url}/auth/logout`, { credentials: "include" });
-      const resData = await res.json();
-      if (!resData.ok) set({ error: err.message });
-      else {
-        window.location.href = "/";
-      }
-    } catch (err) {
-      set({ error: err.message });
-    } finally {
-      set({ loading: false });
     }
   },
 }));
@@ -75,12 +55,12 @@ export const useAuth = create((set, get) => ({
       const resData = await res.json();
       if (!resData.ok) {
         set({ error: resData.msg, user: null });
-      } else set({ user: { ...resData.msg }});
+      } else set({ user: { ...resData.msg } });
     } catch (err) {
       set({ error: err.message, user: null });
     } finally {
       set({ loading: false, userLoader: false });
-      setTimeout(() => set({error: null}), 2000)
+      setTimeout(() => set({ error: null }), 2000);
     }
   },
 
@@ -92,13 +72,12 @@ export const useAuth = create((set, get) => ({
     try {
       const res = await fetch(`${url}/auth/logout`, { credentials: "include" });
       const resData = await res.json();
-      if (!resData.ok) set({ error: err.message });
+      if (!resData.ok) toast.error(resData.msg);
       else {
-        set({user: null, success: true});
-        window.location.href = '/';
+        window.location.href = "/";
       }
     } catch (err) {
-      set({ error: err.message });
+      toast.error(err.message);
     } finally {
       set({ logoutLoading: false });
     }

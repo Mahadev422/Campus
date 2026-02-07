@@ -1,16 +1,9 @@
-import {
-  FaStar,
-  FaUsers,
-} from "react-icons/fa";
-import {
-  HiOutlineCalendar,
-  HiOutlineClock,
-} from "react-icons/hi";
+import { FaStar, FaUsers } from "react-icons/fa";
+import { HiOutlineCalendar, HiOutlineClock } from "react-icons/hi";
 import { Link } from "react-router-dom";
 import { useHelper } from "../../store/useHelper";
 
 const EventCard = ({ event }) => {
-
   const { getEventTypeIcon, formatDate, firstCapital } = useHelper();
   const Icon = getEventTypeIcon(event.eventType);
 
@@ -29,17 +22,17 @@ const EventCard = ({ event }) => {
       </span>
     );
   };
-  
+
   return (
     <div className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden group">
       {/* Event Image */}
       <div className="relative h-48 overflow-hidden">
         <Link to={`/events/${event._id}`}>
-          <img
+          {event.coverImage && <img
             src={event.coverImage}
             alt={event.title}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-          />
+          />}
         </Link>
         <div className="absolute bottom-4 left-4">
           {getStatusBadge(event.status)}
@@ -138,7 +131,8 @@ const EventCard = ({ event }) => {
             <div className="flex items-center space-x-1 text-gray-600">
               <FaUsers className="w-4 h-4" />
               <span className="text-sm">
-                {event.participantsCount}{Number(event.seats) === -1 ? '': `/${event.seats}`} registered
+                {event.participantsCount}
+                {Number(event.seats) === -1 ? "" : `/${event.seats}`} registered
               </span>
             </div>
             <div className="flex items-center space-x-1 text-gray-600">

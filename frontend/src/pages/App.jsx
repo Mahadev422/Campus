@@ -7,11 +7,10 @@ import { useAuth } from "../store/useAuth";
 import WebLoader from "../components/loaders/WebLoader";
 
 function App() {
-  const { userLoader, checkLogin, user} = useAuth();
+  const { userLoader, checkLogin } = useAuth();
 
   useEffect(() => {
     checkLogin();
-    
   }, [0]);
   
   if (userLoader) return <WebLoader />;
