@@ -55,11 +55,6 @@ const Me = () => {
                   { link: "clubs", label: "Clubs", icon: HiOutlineUserGroup },
                   { link: "events", label: "Events", icon: HiOutlineCalendar },
                   {
-                    link: "achievements",
-                    label: "Achievements",
-                    icon: FaTrophy,
-                  },
-                  {
                     link: "settings",
                     label: "Settings",
                     icon: IoMdSettings,

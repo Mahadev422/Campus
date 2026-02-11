@@ -13,7 +13,7 @@ import {
   FaWindowClose,
 } from "react-icons/fa";
 
-const RichTextEditor = ({ initialValue = "", onSubmit, set }) => {
+const Editor = ({ initialValue = "", onSubmit, set }) => {
   const editorRef = useRef(null);
   const savedRange = useRef(null);
 
@@ -112,9 +112,9 @@ const RichTextEditor = ({ initialValue = "", onSubmit, set }) => {
           </select>
         </div>
 
-        <button onClick={() => set(false)}>
+        {set && <button onClick={() => set(false)}>
           <FaWindowClose className="w-5 h-5" />
-        </button>
+        </button>}
       </div>
 
       {/* Editor */}
@@ -188,4 +188,4 @@ const RichTextEditor = ({ initialValue = "", onSubmit, set }) => {
   );
 };
 
-export default RichTextEditor;
+export default Editor;

@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { FaTimes, FaUpload } from "react-icons/fa";
+import { imageLink } from "../../store/useHelper";
+import toast from "react-hot-toast";
 
 const CLOUD_NAME = import.meta.env.VITE_CLOUD_NAME;
 const UPLOAD_PRESET = import.meta.env.VITE_UPLOAD_PRESET;
@@ -10,36 +12,11 @@ export default function ImageUpload({ set, onUpload }) {
   const [error, setError] = useState("");
 
   const handleUpload = async (file) => {
-    if (!file) return;
-
-    if (!file.type.startsWith("image/")) {
-      setError("Only image files are allowed");
-      return;
-    }
-
     setLoading(true);
-    setError("");
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", UPLOAD_PRESET);
-
-    try {
-      const res = await fetch(
-        `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`,
-        {
-          method: "POST",
-          body: formData,
-        },
-      );
-
-      const data = await res.json();
-      setPreview(data.secure_url);
-    } catch {
-      setError("Upload failed. Try again.");
-    } finally {
-      setLoading(false);
-    }
+    const image = await imageLink(file);
+    if(!image) toast.error('Failed to load image');
+    else setPreview(image);
+    setLoading(false);
   };
 
   return (

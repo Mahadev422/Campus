@@ -50,7 +50,7 @@ const BasicDetails = () => {
               <div className="flex-2 md:pl-8 bg-gray-100 rounded-2xl p-4 ">
                 <div className="grid gap-1">
                   <div className="flex items-center space-x-3 mb-2">
-                    <h1 className="text-2xl md:text-3xl xl:text-5xl font-bold font-serif text-gray-900">
+                    <h1 className="text-xl md:text-3xl xl:text-5xl font-bold font-serif text-gray-900">
                       {userData.name}
                     </h1>
                   </div>

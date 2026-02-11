@@ -23,7 +23,6 @@ import EventGallery from "./pages/events/EventGallery";
 import ProfileOverview from "./pages/profile/ProfileOverview";
 import MyEvents from "./pages/profile/MyEvents";
 import MyClubs from "./pages/profile/MyClubs";
-import MyAchievements from "./pages/profile/MyAchievements";
 import CreateEvent from "./pages/events/CreateEventForm";
 import MySettings from "./pages/profile/MySettings";
 
@@ -54,10 +53,6 @@ const Router = createBrowserRouter([
               {
                 path: "clubs",
                 element: <MyClubs />,
-              },
-              {
-                path: "achievements",
-                element: <MyAchievements />,
               },
               {
                 path: "settings",

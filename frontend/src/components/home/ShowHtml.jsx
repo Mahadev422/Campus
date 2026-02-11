@@ -1,4 +1,4 @@
-export default function ShowHtml({ htmlContent, className = "" }) {
+export default function ShowHtml({ htmlContent }) {
   return (
     <div className={`rich-text-content bg-gray-100 p-4 rounded-xl`}>
       <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
