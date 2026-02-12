@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 const stats = [
-  { label: "Founded", value: "1887" },
+  { label: "Founded", value: "1926" },
   { label: "Students", value: "18,400+" },
   { label: "Faculty", value: "1,200+" },
   { label: "Acres", value: "342" },
@@ -12,75 +12,110 @@ const departments = [
   { name: "Arts & Humanities", icon: "🎨", count: "2,800 students" },
   { name: "Sciences & Research", icon: "🔬", count: "3,600 students" },
   { name: "Business & Economics", icon: "📊", count: "3,100 students" },
-  { name: "Law & Social Sciences", icon: "⚖️", count: "2,200 students" },
-  { name: "Medicine & Health", icon: "🩺", count: "2,500 students" },
 ];
 
 const campusSpots = [
   {
-    name: "The Grand Library",
-    desc: "A 5-floor historic library housing over 2.3 million volumes and rare manuscripts dating back to 1891. A sanctuary of knowledge with arched ceilings and oak reading tables.",
+    name: "Heritage Building",
+    desc: "The 'face and soul' of the institute, this colonial-style building was inaugurated in 1926. It houses the administrative offices and the Geological Museum.",
     tag: "Heritage",
     hours: "Mon–Sun · 7am – 11pm",
-    image: "https://images.unsplash.com/photo-1568667256549-094345857637?w=800&q=80",
+    image: "https://commons.wikimedia.org/wiki/File:Heritage_Building_at_IIT_Dhanbad_1.jpg",
     accent: "#b45309",
     light: "#fef3c7",
   },
   {
-    name: "Innovation Hub",
-    desc: "State-of-the-art research labs, maker spaces, and incubator facilities. Home to 40+ active student startups and cutting-edge collaborative workspaces.",
+    name: "Central Library",
+    desc: "One of the largest technical libraries in Asia, this seven-storey facility is a primary academic hub for research and study.",
     tag: "Modern",
     hours: "Mon–Sat · 8am – 10pm",
-    image: "https://images.unsplash.com/photo-1497366754035-f200968a7b9c?w=800&q=80",
+    image: "https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRvbh8teVscRTaI3gr0qPrqX-IIQixns23rscBaVUqQisow3ttw",
     accent: "#1d4ed8",
     light: "#eff6ff",
   },
   {
-    name: "Meridian Quad",
-    desc: "The social heart of campus — a sweeping green lawn framed by neo-Gothic buildings. The ideal place for relaxation, student events, and open-air lectures.",
+    name: "Oval Garden",
+    desc: "A beautifully manicured garden featuring a 2.5-million-year-old petrified wood fossil and serving as a central green lung for the campus.",
     tag: "Social",
     hours: "Open all day · All year",
-    image: "https://images.unsplash.com/photo-1607013251379-e6eecfffe234?w=800&q=80",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm2eCxvz74dNqxV4Jq8r-dC9Iktn6dmLSesQroXE6Tu9AVV-sc",
     accent: "#15803d",
     light: "#f0fdf4",
   },
   {
-    name: "Harrington Hall",
-    desc: "The founding building of the college, constructed in 1887. Now home to administrative offices and a small heritage museum chronicling 137 years of campus history.",
+    name: "Student Activity Centre (SAC)",
+    desc: "A high-end facility for extracurriculars, including gyms, yoga centers, and synthetic sports courts.",
     tag: "Historic",
     hours: "Mon–Fri · 9am – 5pm",
-    image: "https://images.unsplash.com/photo-1576490559132-e9e8f31b8e50?w=800&q=80",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTAvqTT5EaH3tFpcFK41Ljo5l-iJyahI8JPMIlDvaHAgQGfcjPI",
     accent: "#92400e",
     light: "#fff7ed",
   },
   {
-    name: "The Sports Complex",
-    desc: "A world-class athletic facility with an Olympic pool, indoor courts, a 400-metre track, and a dedicated fitness centre open to all enrolled students.",
-    tag: "Athletics",
+    name: "New Lecture Hall Complex (NLHC)",
+    desc: "A high-capacity academic building designed for modern learning, featuring smart classrooms and large halls for undergraduate lectures.",
+    tag: "Education",
     hours: "Daily · 6am – 9pm",
     image: "https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?w=800&q=80",
     accent: "#7c3aed",
     light: "#f5f3ff",
   },
   {
-    name: "The Founders' Garden",
-    desc: "A serene botanical garden planted in 1912, featuring over 300 species of flora. A favourite for students seeking quiet reflection between lectures.",
-    tag: "Nature",
-    hours: "Open daily · Dawn – Dusk",
-    image: "https://images.unsplash.com/photo-1587614382346-4ec70e388b28?w=800&q=80",
-    accent: "#047857",
-    light: "#ecfdf5",
-  },
+    name: 'I2H',
+    desc: 'Institue Innovation Hub',
+    tag: 'Modern',
+    hours: "Daily · 6am – 9pm",
+    image: 'https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRvog-iTnN3BpBek3xaMMte071npLPZyhGrTUR4QVRzboS4-hmD',
+    accent: "#7c3aed",
+    light: "#f5f3ff", 
+  }
 ];
 
 const milestones = [
-  { year: "1887", event: "Founded by Chancellor Elias Harrington as a liberal arts institution." },
-  { year: "1923", event: "Received full university status; first engineering wing inaugurated." },
-  { year: "1952", event: "Opened doors to women, becoming one of the earliest co-educational colleges in the region." },
-  { year: "1971", event: "Established the renowned School of Sciences following a historic national grant." },
-  { year: "1998", event: "Campus digitization initiative launched; first fully networked university in the state." },
-  { year: "2015", event: "Innovation Hub inaugurated; 40+ student startups incubated in first year alone." },
-  { year: "2024", event: "Ranked #3 in national university rankings for research output and student satisfaction." },
+  {
+    year: "1901",
+    event:
+      "Indian National Congress resolution to establish a Government College of Mining Engineering.",
+  },
+  {
+    year: "1920",
+    event:
+      "McPherson Committee recommendation to set up the institution based on the Royal School of Mines, London.",
+  },
+  {
+    year: "1926",
+    event:
+      "Formal inauguration of the Indian School of Mines by Lord Irwin on December 9.",
+  },
+  {
+    year: "1957",
+    event:
+      "Expansion into Petroleum Engineering and Applied Geophysics; renamed to Indian School of Mines.",
+  },
+  {
+    year: "1967",
+    event:
+      "Granted Deemed-to-be University status by the University Grants Commission.",
+  },
+  {
+    year: "1997",
+    event:
+      "Started admitting undergraduate students through the IIT-JEE entrance examination.",
+  },
+  {
+    year: "2016",
+    event:
+      "Officially converted into an Indian Institute of Technology (IIT) on September 6.",
+  },
+  {
+    year: "2025",
+    event:
+      "Commencement of Centenary Year celebrations and 100th Foundation Day on December 9.",
+  },
+  {
+    year: "2026",
+    event: "Centenary Convocation and launch of new integrated BS-MS programs.",
+  },
 ];
 
 const testimonials = [
@@ -196,7 +231,7 @@ export default function Home() {
     <div className="min-h-screen bg-white text-gray-900" style={{ fontFamily: "'Georgia', 'Times New Roman', serif" }}>
 
       {/* ════════════ HERO ════════════ */}
-      <header className="relative overflow-hidden" style={{ minHeight: "100vh" }}>
+      <header className="relative overflow-hidden min-h-screen">
         <img
           src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=1600&q=80"
           alt="Harrington University campus"
@@ -209,7 +244,7 @@ export default function Home() {
         <nav className="absolute top-0 left-0 right-0 flex items-center justify-between px-8 py-5 z-20">
           <div className="flex items-center gap-3">
             <div className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ backgroundColor: "#1e3a5f" }}>H</div>
-            <span className="text-sm tracking-widest uppercase text-white font-medium" style={{ fontFamily: "sans-serif" }}>Harrington University</span>
+            <span className="text-sm tracking-widest uppercase text-white font-medium" style={{ fontFamily: "sans-serif" }}>IIT-ISM Dhanbad</span>
           </div>
           <div className="hidden md:flex gap-8 text-sm text-white/80" style={{ fontFamily: "sans-serif" }}>
             {["Overview", "Journey", "Campus", "People"].map((t) => (
@@ -222,13 +257,13 @@ export default function Home() {
         <div className="absolute bottom-0 left-0 right-0 z-10 px-8 md:px-20 pb-16 max-w-6xl">
           <div className="flex items-center gap-3 mb-5">
             <div className="w-10 h-px bg-amber-500" />
-            <span className="text-amber-600 text-xs tracking-[0.35em] uppercase" style={{ fontFamily: "sans-serif" }}>Est. 1887 · Excellence in Education</span>
+            <span className="text-amber-600 text-xs tracking-[0.35em] uppercase" style={{ fontFamily: "sans-serif" }}>Est. 1926 · Excellence in Education</span>
           </div>
           <h1 className="font-bold leading-none text-gray-900 mb-1" style={{ fontSize: "clamp(3.5rem, 10vw, 7rem)", letterSpacing: "-0.03em" }}>
-            Harrington
+            IIT-ISM
           </h1>
           <h2 className="font-normal leading-none mb-8" style={{ fontSize: "clamp(2rem, 5vw, 4rem)", letterSpacing: "-0.01em", color: "#1e3a5f" }}>
-            University
+            Dhanbad
           </h2>
           <p className="max-w-lg text-gray-500 text-lg leading-relaxed" style={{ fontFamily: "sans-serif" }}>
             A century of scholarship, discovery, and service. Where traditions of learning meet the ambitions of tomorrow.
@@ -279,10 +314,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-px bg-amber-500" />
-            <span className="text-xs tracking-[0.3em] uppercase font-semibold text-amber-600" style={{ fontFamily: "sans-serif" }}>Our Journey</span>
+            <span className="text-xs tracking-[0.3em] uppercase font-semibold text-amber-600 font-serif">Our Journey</span>
           </div>
           <h3 className="text-5xl font-bold mb-14 text-gray-900">
-            137 Years of <span style={{ color: "#1e3a5f" }}>History</span>
+            {Number(new Date().getFullYear()) - 1926} Years of <span className="text-[#1e3a5f]">History</span>
           </h3>
 
           <div className="relative">
