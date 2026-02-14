@@ -11,7 +11,7 @@ const JoinedClubCard = ({ club }) => {
           </div>
           <Link to={`/clubs/${club._id}`}>
             <h4 className="font-bold hover:text-blue-500 text-xl hover:underline text-gray-900">{club.clubName}</h4>
-            <p className="text-gray-600">{club.category}</p>
+            <p className="text-gray-600 capitalize">{club.category}</p>
           </Link>
         </div>
       </div>

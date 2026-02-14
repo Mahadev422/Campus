@@ -1,14 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
-  FaCog,
-  FaTrophy,
-  FaTwitter,
   FaLinkedin,
   FaGithub,
-  FaInstagram,
-  FaGlobe,
-  FaPhone,
-  FaVoicemail,
 } from "react-icons/fa";
 import {
   HiOutlineUser,
@@ -19,7 +12,7 @@ import {
   HiOutlineGlobe,
 } from "react-icons/hi";
 
-import { Link, Navigate, Outlet } from "react-router-dom";
+import { Link, Navigate, Outlet, useLocation } from "react-router-dom";
 import BasicDetails from "../../components/profile/BasicDetails";
 import { useUser } from "../../store/useUser";
 import { useAuth, useLogin } from "../../store/useAuth";
@@ -29,6 +22,8 @@ import { IoMdSettings } from "react-icons/io";
 const Me = () => {
   const { getMyData, userData, loading } = useUser();
   const { user, userLoader } = useAuth();
+
+  const path = useLocation().pathname.split('/')[2];
 
   useEffect(() => {
     getMyData();
@@ -49,7 +44,7 @@ const Me = () => {
           <div className="lg:w-3/4">
             {/* Navigation Tabs */}
             <div className="bg-white rounded-md shadow-md mb-8 overflow-hidden">
-              <div className="flex justify-around no-scroll overflow-x-auto">
+              <div className="flex justify-around no-scroll overflow-x-auto py-2">
                 {[
                   { link: "", label: "Overview", icon: HiOutlineUser },
                   { link: "clubs", label: "Clubs", icon: HiOutlineUserGroup },
@@ -65,8 +60,8 @@ const Me = () => {
                     <Link
                       to={`${tab.link}`}
                       key={i}
-                      className={`flex items-center space-x-2 px-6 py-4 font-semibold whitespace-nowrap transition-colors 
-                          text-gray-600 hover:text-blue-600 hover:bg-gray-50
+                      className={`flex items-center ${tab.link === (path ? path : "") ? 'bg-blue-400 text-white': ''} space-x-2 px-3 rounded-md py-2 font-semibold whitespace-nowrap transition-colors 
+                          text-gray-600 hover:bg-blue-500
                       `}
                     >
                       <Icon className="w-5 h-5" />

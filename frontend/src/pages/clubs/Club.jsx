@@ -13,8 +13,8 @@ import RefreshPage from '../../components/home/RefreshPage';
 
 const Club = () => {
   const { clubId } = useParams();
-  const location = useLocation();
-
+  const path = useLocation().pathname.split('/')[3];
+  
   const {user} = useAuth();
   const [upload, setUpload] = useState(false);
 
@@ -60,7 +60,7 @@ const Club = () => {
           <div className="lg:w-2/3">
             {/* Navigation Tabs */}
             <div className="bg-white rounded shadow-lg mb-8 overflow-hidden">
-              <div className="flex justify-around overflow-x-auto">
+              <div className="flex justify-around overflow-x-auto py-2">
                 {[
                   { name: "About", link: "" },
                   { name: "Members", link: "members" },
@@ -71,8 +71,8 @@ const Club = () => {
                   <Link
                     key={i}
                     to={tab.link}
-                    className={`px-4 py-3 font-semibold whitespace-nowrap transition-colors
-                      hover:bg-blue-100`}
+                    className={`px-4 py-2 rounded-md ${tab.link === (path ? path : "")? 'bg-blue-400': ''} font-semibold whitespace-nowrap transition-colors
+                      hover:bg-blue-500`}
                   >
                     {tab.name}
                   </Link>
