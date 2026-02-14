@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   FaLinkedin,
   FaGithub,
+  FaGlobe
 } from "react-icons/fa";
 import {
   HiOutlineUser,
@@ -109,7 +110,7 @@ const Me = () => {
                     </div>
                   </div>
                   <div className="flex items-center space-x-3">
-                    <HiOutlineGlobe className="w-5 h-5 text-blue-600" />
+                    <FaGlobe className="w-5 h-5 text-blue-600" />
                     <div>
                       <div className="text-sm text-gray-500">Website</div>
                       <a
@@ -120,29 +121,34 @@ const Me = () => {
                       </a>
                     </div>
                   </div>
-                </div>
-              </div>
+                  <div className="flex items-center space-x-3">
+                    <FaGithub className="w-5 h-5 text-blue-600" />
+                    <div>
+                      <div className="text-sm text-gray-500">Github</div>
+                      <a
+                        href={userData.contact?.github}
+                        className="font-medium text-blue-600 hover:underline"
+                      >
+                        {userData.contact?.website}
+                      </a>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <FaLinkedin className="w-5 h-5 text-blue-600" />
+                    <div>
+                      <div className="text-sm text-gray-500">LinkedIn</div>
+                      <a
+                        href={userData.contact?.linkedin}
+                        className="font-medium text-blue-600 hover:underline"
+                      >
+                        {userData.contact?.linkedin}
+                      </a>
+                    </div>
+                  </div>
 
-              {/* Social Media Links */}
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">
-                  Social Links
-                </h3>
-                <div className="flex space-x-3">
-                  <a
-                    href=""
-                    className="p-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-blue-100 hover:text-blue-600 transition-colors"
-                  >
-                    <FaGithub className="w-6 h-6" />
-                  </a>
-                  <a
-                    href=""
-                    className="p-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-blue-100 hover:text-blue-600 transition-colors"
-                  >
-                    <FaLinkedin className="w-6 h-6" />
-                  </a>
                 </div>
               </div>
+              
             </div>
           </div>
         </div>

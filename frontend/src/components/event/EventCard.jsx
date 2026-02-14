@@ -4,19 +4,20 @@ import { Link } from "react-router-dom";
 import { useHelper } from "../../store/useHelper";
 
 const EventCard = ({ event }) => {
-  const { getEventTypeIcon, formatDate, firstCapital } = useHelper();
+  const { getEventTypeIcon, formatDate, isBeforeToday } = useHelper();
   const Icon = getEventTypeIcon(event.eventType);
 
   const getStatusBadge = (status) => {
+    
     const styles = {
       upcoming: "bg-green-100 text-green-800",
       ongoing: "bg-blue-100 text-blue-800",
-      past: "bg-gray-100 text-gray-800",
+      completed: "bg-gray-100 text-gray-800",
       cancelled: "bg-red-100 text-red-800",
     };
     return (
       <span
-        className={`px-3 py-1 capitalize rounded-full text-xs font-semibold ${styles[status]}`}
+        className={`px-3 py-1 capitalize rounded-full text-xs font-semibold ${styles[status.toLowerCase()]}`}
       >
         {status}
       </span>
@@ -35,7 +36,7 @@ const EventCard = ({ event }) => {
           />}
         </Link>
         <div className="absolute bottom-4 left-4">
-          {getStatusBadge(event.status)}
+          {getStatusBadge(isBeforeToday(event.to.date))}
         </div>
       </div>
 
@@ -48,9 +49,9 @@ const EventCard = ({ event }) => {
               <Icon className="w-5 h-5" />
             </div>
             <span
-              className={`text-sm font-semibold bg-green-200 px-2 py-1 rounded-xl font-serif`}
+              className='text-sm capitalize font-semibold bg-green-200 px-2 py-1 rounded-xl font-serif'
             >
-              {firstCapital(event.eventType)}
+              {event.eventType}
             </span>
           </div>
 
@@ -62,7 +63,7 @@ const EventCard = ({ event }) => {
         {/* Event Title */}
         <Link
           to={`${event._id}`}
-          className="text-xl hover:text-blue-600 hover:underline font-bold text-gray-900 mb-3 line-clamp-1"
+          className="text-xl hover:text-blue-600 hover:underline font-bold text-gray-900 mb-3 truncate line-clamp-1"
         >
           {event.title}
         </Link>
@@ -70,7 +71,7 @@ const EventCard = ({ event }) => {
         {/* Event Details Grid */}
         <div className="grid grid-cols-2 gap-4">
           {/* Date Time */}
-          <div className="grid bg-green-200 rounded-lg py-2 px-4">
+          <div className="grid border border-gray-400 bg-green-200 rounded-lg py-2 px-4">
             <h1 className="font-semibold">Start From:</h1>
 
             <div className="flex items-center space-x-3">
@@ -96,7 +97,7 @@ const EventCard = ({ event }) => {
               </div>
             </div>
           </div>
-          <div className="grid bg-red-200 rounded-lg py-2 px-4">
+          <div className="grid border border-gray-400 bg-red-200 rounded-lg py-2 px-4">
             <h1 className="font-semibold">End At:</h1>
             <div className="flex items-center space-x-3">
               <div className="p-1 bg-blue-50 rounded-lg">
@@ -132,7 +133,7 @@ const EventCard = ({ event }) => {
               <FaUsers className="w-4 h-4" />
               <span className="text-sm">
                 {event.participantsCount}
-                {Number(event.seats) === -1 ? "" : `/${event.seats}`} registered
+                {Number(event.seats) === -1 || !event.seats ? " " : `/${event.seats}`} registered
               </span>
             </div>
             <div className="flex items-center space-x-1 text-gray-600">

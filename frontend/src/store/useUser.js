@@ -36,9 +36,14 @@ export const useUser = create((set, get) => ({
   changeBio: (text, close) => {
     get().changeProfile('bio', text, close);
   },
+
+  changeLinks: (links, close) => {
+    get().changeProfile('contact', links, close);
+  },
+  
   changeProfile: async (key, value, close) => {
     if (!key || !value) return;
-
+    const toastId = toast.loading('Updating...');
     try {
       const res = await fetch(`${url}/user/change`, {
         method: "PATCH",
@@ -59,6 +64,8 @@ export const useUser = create((set, get) => ({
       }
     } catch (err) {
       toast.error(err.message);
+    } finally {
+      toast.dismiss(toastId);
     }
   },
 }));

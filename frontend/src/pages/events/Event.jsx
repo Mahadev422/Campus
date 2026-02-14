@@ -27,7 +27,7 @@ const Event = () => {
       {upload && <ImageUpload set={setUpload} onUpload={changeCoverImage} />}
       <div className="relative">
         <div className="h-96 overflow-hidden relative">
-          {(user && user?._id === event?.createdBy?.userId) && <button onClick={() => setUpload(true)} className="absolute cursor-pointer top-3 z-20 bg-blue-500 p-3 text-white rounded-full right-3"><FaCamera className="h-5 w-5" /></button>}
+          {(user && user?._id === event?.createdBy.userId) && <button onClick={() => setUpload(true)} className="absolute cursor-pointer top-3 z-20 bg-blue-500 p-3 text-white rounded-full right-3"><FaCamera className="h-5 w-5" /></button>}
           <img
             src={event.coverImage || 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&h=600&fit=crop'}
             alt="Event Cover"

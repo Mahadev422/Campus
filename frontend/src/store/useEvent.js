@@ -7,6 +7,7 @@ export const useCreateEvent = create((set, get) => ({
   loading: false,
   error: null,
   success: false,
+  
   handleCreateEvent: async (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
