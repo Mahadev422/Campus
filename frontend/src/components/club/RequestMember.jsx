@@ -1,6 +1,6 @@
 import RequestMenu from "./RequestMenu";
 
-const RequestMember = ({member, admin}) => {
+const RequestMember = ({member, clubId}) => {
   
   return (
     <div
@@ -25,7 +25,7 @@ const RequestMember = ({member, admin}) => {
       </div>
       </div>
       <div>
-        <RequestMenu />
+        <RequestMenu memberId={member._id} clubId={clubId} />
       </div>
     </div>
   );

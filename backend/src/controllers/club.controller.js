@@ -1,5 +1,7 @@
 import Club from "../models/club.model.js";
 import User from "../models/user.model.js";
+import mongoose from "mongoose";
+
 
 export const getAllClubs = async (req, res) => {
   try {
@@ -109,7 +111,7 @@ export const getRequestForJoin = async (req, res) => {
       });
     }
     const coordi = club.coordinator.some((c) => c.userId.toString() === userId);
-    
+
     if (!coordi)
       return res.status(403).json({ ok: false, msg: "You are not admin" });
 
@@ -139,7 +141,7 @@ export const updateClub = async (req, res) => {
     "coverImage",
     "website",
     "logo",
-    "tagline"
+    "tagline",
   ];
 
   if (!ALLOWED_FIELDS.includes(key)) {
@@ -155,7 +157,7 @@ export const updateClub = async (req, res) => {
       {
         $set: { [key]: value },
       },
-      { new: true }
+      { new: true },
     );
 
     if (!club) {
@@ -169,5 +171,64 @@ export const updateClub = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ ok: false, msg: "Server error" });
+  }
+};
+
+export const handleRequest = async (req, res) => {
+  const userId = req.userId;
+  const { memberId, clubId, label } = req.body;
+
+  // return res.status(200).json({ok: false, msg: label.toLowerCase()})
+  try {
+
+    if (!["accept", "reject"].includes(label.toLowerCase())) {
+      return res.status(400).json({ ok: false, msg: "Invalid action" });
+    }
+
+    const club = await Club.findOne({
+      _id: clubId,
+      "coordinator.userId": userId,
+    });
+
+    if (!club) {
+      return res.status(403).json({ ok: false, msg: "Not authorized" });
+    }
+
+    club.requestForJoin.pull(memberId);
+
+    if (label.toLowerCase() === "accept") {
+      const user = await User.findById(memberId);
+
+      if (!user) {
+        return res.status(404).json({ ok: false, msg: "User not found" });
+      }
+
+      const alreadyMember = club.members.some(
+        (m) => m.userId.toString() === memberId,
+      );
+    
+      if (!alreadyMember) {
+        club.members.push({
+          userId: memberId,
+          name: user.name,
+        });
+
+        const exits = user.clubsJoined.some(c => c.toString() === club._id);
+        if(!exits) {
+          user.clubsJoined.push(club._id);
+          user.save();
+        }
+      }
+    }
+
+    await club.save();
+
+    return res.status(200).json({
+      ok: true,
+      msg: club,
+    });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ ok: false, msg: "Server error" });
   }
 };

@@ -38,7 +38,7 @@ const ClubRequests = () => {
           </div>
         ) : (
           requests.map((member) => (
-            <RequestMember key={member._id} admin={admin} member={member} />
+            <RequestMember key={member._id} clubId={clubData._id} member={member} />
           ))
         )}
       </div>

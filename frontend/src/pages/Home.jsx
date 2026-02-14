@@ -242,9 +242,9 @@ export default function Home() {
 
         {/* Nav */}
         <nav className="absolute top-0 left-0 right-0 flex items-center justify-between px-8 py-5 z-20">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ backgroundColor: "#1e3a5f" }}>H</div>
-            <span className="text-sm tracking-widest uppercase text-white font-medium" style={{ fontFamily: "sans-serif" }}>IIT-ISM Dhanbad</span>
+          <div className="flex text-2xl items-center gap-3">
+            <div className="rounded-full flex items-center justify-center text-white font-bold bg-[#1e3a5f] p-1">ISM</div>
+            <span className="tracking-widest uppercase text-white font-medium font-serif">IIT-ISM Dhanbad</span>
           </div>
           <div className="hidden md:flex gap-8 text-sm text-white/80" style={{ fontFamily: "sans-serif" }}>
             {["Overview", "Journey", "Campus", "People"].map((t) => (
@@ -490,10 +490,9 @@ export default function Home() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div>
             <div className="flex items-center gap-3 mb-1">
-              <div className="w-8 h-8 rounded-full flex items-center justify-center text-white font-bold text-sm" style={{ backgroundColor: "#1e3a5f" }}>H</div>
-              <span className="font-bold text-gray-900" style={{ fontFamily: "sans-serif" }}>Harrington University</span>
+              <div className="rounded-full p-1 flex items-center justify-center text-white font-bold text-sm bg-[#1e3a5f]">ISM</div>
+              <span className="font-bold text-gray-900" style={{ fontFamily: "sans-serif" }}>IIT ISM Dhanbad</span>
             </div>
-            <div className="text-xs text-gray-400" style={{ fontFamily: "sans-serif" }}>Lux et Veritas · Founded 1887 · Westmore County</div>
           </div>
           <div className="flex gap-8 text-xs text-gray-400 tracking-widest uppercase" style={{ fontFamily: "sans-serif" }}>
             {["Admissions", "Research", "Alumni", "Contact"].map((link) => (

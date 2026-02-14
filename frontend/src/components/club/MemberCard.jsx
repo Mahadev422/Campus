@@ -1,5 +1,5 @@
 import { useHelper } from "../../store/useHelper";
-import { FaUserShield, FaUsers } from "react-icons/fa";
+import { FaUserShield, FaUser } from "react-icons/fa";
 
 const MemberCard = ({ member }) => {
   const { formatDate, firstCapital } = useHelper();

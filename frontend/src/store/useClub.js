@@ -112,17 +112,17 @@ export const useClubById = create((set, get) => ({
 
   changeClubCoverImage: (image, close) => {
     const clubId = get().clubData._id;
-    get().changeClub('coverImage', image, clubId, close);
+    get().changeClub("coverImage", image, clubId, close);
   },
 
   changeClubLogo: (image, close) => {
     const clubId = get().clubData._id;
-    get().changeClub('logo', image, clubId, close);
+    get().changeClub("logo", image, clubId, close);
   },
 
   changeClubDescription: (text, close) => {
     const clubId = get().clubData._id;
-    get().changeClub('description', text, clubId, close);
+    get().changeClub("description", text, clubId, close);
   },
 
   changeClub: async (key, value, clubId, close) => {
@@ -138,7 +138,7 @@ export const useClubById = create((set, get) => ({
       });
 
       const resData = await res.json();
-      
+
       if (!resData.ok) {
         toast.error(resData.msg);
       } else {
@@ -150,6 +150,35 @@ export const useClubById = create((set, get) => ({
       toast.error(err.message);
     } finally {
       set({ imageLoader: false });
+    }
+  },
+  handleRequest: async (clubId, memberId, label) => {
+    if (!clubId || !memberId || !label) return;
+
+    const toastId = toast.loading(`${label}`);
+    try {
+      const res = await fetch(`${url}/club/handle-request`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ clubId, memberId, label }),
+      });
+
+      const resData = await res.json();
+      console.log(resData);
+
+      if (!resData.ok) {
+        toast.error(resData.msg);
+      } else {
+        toast.success(`${label} successfully.`);
+        set({clubData: resData.msg})
+      }
+    } catch (err) {
+      toast.error(err.message);
+    } finally {
+      toast.dismiss(toastId);
     }
   },
 }));

@@ -1,10 +1,13 @@
 import { useState, useRef, useEffect } from "react";
 import { FiMoreVertical } from "react-icons/fi";
+import { useClubById } from "../../store/useClub";
 
-export default function RequestMenu({ options = ['Accept', 'Reject'] }) {
+export default function RequestMenu({ memberId, clubId }) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef(null);
 
+  const {handleRequest} = useClubById();
+  const options = ["Accept", "Reject"];
   // Close on outside click
   useEffect(() => {
     const handler = (e) => {
@@ -18,7 +21,7 @@ export default function RequestMenu({ options = ['Accept', 'Reject'] }) {
 
   const handleClick = (opt) => {
     console.log(opt);
-  }
+  };
   return (
     <div className="relative inline-block" ref={menuRef}>
       {/* Three dot button */}
@@ -36,7 +39,7 @@ export default function RequestMenu({ options = ['Accept', 'Reject'] }) {
             <button
               key={idx}
               onClick={() => {
-                handleClick(opt);
+                handleRequest(clubId, memberId, opt);
                 setOpen(false);
               }}
               className="flex w-full items-center gap-2 px-4 py-2 text-sm hover:bg-gray-100"
