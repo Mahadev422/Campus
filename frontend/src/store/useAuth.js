@@ -41,7 +41,7 @@ export const useLogin = create((set, get) => ({
 
   handleGoogleLogin: async (credential) => {
     try {
-      const res = await fetch("http://localhost:5000/api/auth/google", {
+      const res = await fetch(`${url}/auth/google`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
