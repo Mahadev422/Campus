@@ -38,6 +38,29 @@ export const useLogin = create((set, get) => ({
       set({ isLoading: false });
     }
   },
+
+  handleGoogleLogin: async (credential) => {
+    try {
+      const res = await fetch("http://localhost:5000/api/auth/google", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ credential }),
+      });
+
+      const resData = await res.json();
+
+      if(!resData.ok) {
+        toast.error(resData.msg);
+      }
+      else {
+        toast.success(resData.msg.name);
+        window.location.href = '/';
+      }
+    } catch (err) {
+      toast.error(err.message);
+    }
+  },
 }));
 
 export const useAuth = create((set, get) => ({

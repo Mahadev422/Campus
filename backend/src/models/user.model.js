@@ -62,6 +62,7 @@ const academicSchema = new mongoose.Schema(
 
 const userSchema = new mongoose.Schema(
   {
+    googleId: String,
     name: {
       type: String,
       required: true,

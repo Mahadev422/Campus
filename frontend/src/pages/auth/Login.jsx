@@ -11,6 +11,7 @@ import ForgotPassword from "./ForgotPassword";
 import { useAuth, useLogin } from "../../store/useAuth";
 import { Navigate } from "react-router-dom";
 import CirclesLoader from '../../components/loaders/CirclesLoader';
+import GoogleAuth from "./GoogleAuth";
 
 
 const Login = () => {
@@ -39,7 +40,7 @@ if(loading) return <CirclesLoader />
         {/* Login Card */}
         <div className="relative bg-white/95 backdrop-blur-sm rounded-2xl shadow-2xl shadow-indigo-100/50 border border-white/20 overflow-hidden">
           {/* Header */}
-          <div className="px-8 pt-10 pb-8">
+          <div className="px-8 pt-10">
             <div className="text-center mb-8">
               <div className="w-16 h-16 bg-linear-to-br from-indigo-500 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-lg">
                 <FaLock className="w-8 h-8 text-white" />
@@ -148,7 +149,15 @@ if(loading) return <CirclesLoader />
                 )}
               </button>
             </form>
+            
           </div>
+          
+          <div className="p-8">
+            <hr />
+            <br />
+            <GoogleAuth />
+          </div>
+          
         </div>
 
         {/* Forgot Password Modal */}

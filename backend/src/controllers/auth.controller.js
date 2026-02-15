@@ -69,3 +69,71 @@ export const checkLoggedIn = async (req, res) => {
     res.status(400).json({ ok: false, msg: err.message });
   }
 };
+
+import { OAuth2Client } from "google-auth-library";
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+export const googleAuth = async (req, res) => {
+  const { credential } = req.body;
+
+  if (!credential) {
+    return res
+      .status(400)
+      .json({ ok: false, msg: "Credential token required" });
+  }
+  try {
+    const ticket = await client.verifyIdToken({
+      idToken: credential,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+
+    const { sub: googleId, email, name, picture, email_verified } = payload;
+
+    if (!email_verified) {
+      return res.status(400).json({ ok: false, msg: "Email not verified" });
+    }
+
+    let user = await User.findOne({ "contact.email": email });
+
+    if (!user) {
+      console.log("🆕 Creating new user...");
+      const userName = email.split("@")[0];
+      const password = `${userName}#iSM`;
+      user = await User.create({
+        googleId,
+        name,
+        userName,
+        password,
+        contact: { email },
+        academic: { degree: "Outsider", department: "Not in college" },
+        profilePic: picture,
+      });
+    }
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    res
+      .cookie("act", accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 15 * 60 * 1000,
+      })
+      .cookie("rft", refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+      })
+      .json({ ok: true, msg: { _id: user._id, name: user.name } });
+  } catch (error) {
+    console.error("🔥 Google Auth Error:", error.message);
+    return res.status(500).json({
+      ok: false,
+      msg: "Google authentication failed",
+    });
+  }
+};
