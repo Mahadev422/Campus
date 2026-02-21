@@ -58,7 +58,7 @@ const ClubGallery = () => {
   const { user } = useAuth();
   const {clubData} = useClubById();
   return (
-    <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 p-4 md:p-8">
+    <div className="min-h-screen bg-linear-to-br">
       <header className="bg-white flex justify-between p-4 mb-3 rounded">
         <span className="text-2xl font-bold">Post</span>
         <button onClick={() => setAddPost(!addPost)}>
@@ -73,7 +73,7 @@ const ClubGallery = () => {
         ) : (
           <div className="space-y-6">
             {posts.length === 0 ? (
-              <div className="bg-white rounded-2xl shadow p-8 text-center">
+              <div className="bg-white rounded-2xl shadow text-center">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-12 w-12 mx-auto text-gray-300 mb-4"

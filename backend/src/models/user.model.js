@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-// import bcrypt from "bcryptjs";
+import { sendMail } from "../middleware/sendingEmail.js";
+import { signUpEmail } from "../utils/emailTemplate.js";
 
 const contactSchema = new mongoose.Schema(
   {
@@ -106,8 +107,7 @@ const userSchema = new mongoose.Schema(
         {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Club",
-        },
-        {timestamps: true}
+        }
       ],
       default: [],
     },
@@ -143,6 +143,13 @@ const userSchema = new mongoose.Schema(
   },
   { timestamps: true },
 );
+
+userSchema.post('save', function (doc) {
+  console.log("🆕 Creating new user...");
+  const {name, contact} = doc;
+  const html = signUpEmail(name, contact.email);
+  sendMail(name, contact.email, html);
+});
 
 const User = mongoose.model("User", userSchema);
 export default User;

@@ -1,6 +1,7 @@
 import React from "react";
 import { FaFilter, FaSearch, FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import {useAuth} from '../../store/useAuth';
 
 const ClubControl = ({
   searchTerm,
@@ -21,6 +22,8 @@ const ClubControl = ({
     "Film",
     "Environment",
   ];
+
+  const {user} = useAuth();
 
   return (
     <div className="bg-white rounded-2xl shadow-lg p-6 mb-8">
@@ -54,10 +57,10 @@ const ClubControl = ({
             <FaFilter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
           </div>
 
-          <Link to='create-club' className="flex items-center space-x-2 p-3 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300">
+          {user && <Link to='create-club' className="flex items-center space-x-2 p-3 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300">
             <FaPlus className="w-5 h-5" />
             <span>Request Club</span>
-          </Link>
+          </Link>}
         </div>
       </div>
     </div>

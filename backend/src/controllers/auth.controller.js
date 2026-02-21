@@ -99,7 +99,6 @@ export const googleAuth = async (req, res) => {
     let user = await User.findOne({ "contact.email": email });
 
     if (!user) {
-      console.log("🆕 Creating new user...");
       const userName = email.split("@")[0];
       const password = `${userName}#iSM`;
       user = await User.create({
