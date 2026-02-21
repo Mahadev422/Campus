@@ -1,9 +1,5 @@
 import { useEffect } from "react";
-import {
-  FaLinkedin,
-  FaGithub,
-  FaGlobe
-} from "react-icons/fa";
+import { FaLinkedin, FaGithub, FaGlobe } from "react-icons/fa";
 import {
   HiOutlineUser,
   HiOutlineCalendar,
@@ -24,7 +20,7 @@ const Me = () => {
   const { getMyData, userData, loading } = useUser();
   const { user, userLoader } = useAuth();
 
-  const path = useLocation().pathname.split('/')[2];
+  const path = useLocation().pathname.split("/")[2];
 
   useEffect(() => {
     getMyData();
@@ -61,7 +57,7 @@ const Me = () => {
                     <Link
                       to={`${tab.link}`}
                       key={i}
-                      className={`flex items-center ${tab.link === (path ? path : "") ? 'bg-blue-400 text-white': ''} space-x-2 px-3 rounded-md py-2 font-semibold whitespace-nowrap transition-colors 
+                      className={`flex items-center ${tab.link === (path ? path : "") ? "bg-blue-400 text-white" : ""} space-x-2 px-3 rounded-md py-2 font-semibold whitespace-nowrap transition-colors 
                           text-gray-600 hover:bg-blue-500
                       `}
                     >
@@ -79,19 +75,19 @@ const Me = () => {
           {/* Left Column - Stats & Info */}
           <div className="lg:w-1/4 space-y-6">
             {/* Contact Information */}
-            <div className="bg-white grid gap-4 rounded-2xl shadow-md p-6">
+            <div className="bg-white grid gap-4 overflow-clip rounded-2xl shadow-md p-6">
               <div>
                 <h3 className="text-xl font-bold text-gray-900 mb-4">
                   Contact Information
                 </h3>
                 <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center space-x-3 max-w-full">
                     <HiOutlineMail className="w-5 h-5 text-blue-600" />
                     <div>
                       <div className="text-sm text-gray-500">Email</div>
                       <a
                         href={`mailto:${userData.contact?.email}`}
-                        className="font-medium text-blue-600 hover:underline"
+                        className="font-medium line-clamp-1 text-blue-600 hover:underline"
                       >
                         {userData.contact?.email}
                       </a>
@@ -145,10 +141,8 @@ const Me = () => {
                       </a>
                     </div>
                   </div>
-
                 </div>
               </div>
-              
             </div>
           </div>
         </div>

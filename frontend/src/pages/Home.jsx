@@ -487,14 +487,14 @@ export default function Home() {
 
       {/* ════════════ FOOTER ════════════ */}
       <footer className="border-t border-gray-100 px-8 md:px-20 py-10 bg-white">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="max-w-7xl mx-auto flex flex-wrap justify-between gap-6">
           <div>
             <div className="flex items-center gap-3 mb-1">
               <div className="rounded-full p-1 flex items-center justify-center text-white font-bold text-sm bg-[#1e3a5f]">ISM</div>
-              <span className="font-bold text-gray-900" style={{ fontFamily: "sans-serif" }}>IIT ISM Dhanbad</span>
+              <span className="font-bold text-gray-900 font-serif">IIT ISM Dhanbad</span>
             </div>
           </div>
-          <div className="flex gap-8 text-xs text-gray-400 tracking-widest uppercase" style={{ fontFamily: "sans-serif" }}>
+          <div className="flex flex-wrap gap-8 text-xs text-gray-400 tracking-widest uppercase">
             {["Admissions", "Research", "Alumni", "Contact"].map((link) => (
               <span key={link} className="hover:text-amber-600 cursor-pointer transition-colors">{link}</span>
             ))}
