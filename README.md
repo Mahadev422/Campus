@@ -86,13 +86,13 @@ npm -v
    ```bash
    cd frontend
    npm install
-   cd ..
-  ```
+   cd ../
+   ```
 3. Install backend dependencies
   ```bash
   cd backend
   npm install
-  cd ..
+  cd ../
   ```
 4. Create `.env` file
    ```env
