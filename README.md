@@ -99,13 +99,13 @@ npm -v
     VITE_BACKEND=http://localhost:5000/api
     VITE_CLOUD_NAME = dpbxxxx # Claudinary
     VITE_UPLOAD_PRESET = Image # Claudinary
-    VITE_CLIENT_ID=830636630919-92bbka20kn5jr4t4n5m1hm239s8vrlb4.apps.googleusercontent.com # Google-OAuth
-    MONGO_URI=mongodb+srv://project9162595119_db_user:5tnMXzcJTX56FA8i@cluster0.y8dzde5.mongodb.net/management # MongoDB
+    VITE_CLIENT_ID=xxxxxxxxxxxxxxxxx.apps.googleusercontent.com # Google-OAuth
+    MONGO_URI=mongodb+srv://[user-name]:[password].y8dzde5.mongodb.net/database # MongoDB
     PORT=5000
     JWT_ACCESS_SECRET=secret-toekn
     JWT_REFRESH_SECRET=secret-token
     NODE_ENV=production
-    GOOGLE_CLIENT_ID=830636630919-92bbka20kn5jr4t4n5m1hm239s8vrlb4.apps.googleusercontent.com # Google-OAuth
+    GOOGLE_CLIENT_ID=xxxxxxxxxxxxxxxxxx.apps.googleusercontent.com # Google-OAuth
     PUBLIC_KEY=y7upmG3exxxxxxxxx # Google-OAuth
     PRIVATE_KEY=_kjsRnuPxxxxxxxx # Google-OAuth
     SERVICE_ID=servixxxxxxxxxxxx # Email.js
