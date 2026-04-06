@@ -1,5 +1,6 @@
 # 🎓 Campus
 
+[live link](https://campus-hg1f.onrender.com)
 A **full-stack campus management web application** designed to simplify and digitalize campus activities.  
 The project separates **frontend and backend architectures** to ensure scalability, maintainability, and faster development.
 
